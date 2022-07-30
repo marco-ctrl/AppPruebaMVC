@@ -1,0 +1,99 @@
+﻿@model IEnumerable<AppPruebaMVC.Data.Models.TipoUsuario>
+
+@{
+    ViewData["Title"] = "Tipos Usuarios";
+}
+
+<div class="container">
+    <h1>TIPOS DE USUARIOS</h1>
+
+<p>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+</p>
+<div class="card">
+    <table class="responsive-table highlight">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cargo)
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr id="@item.Codigo">
+            <td>
+                @Html.DisplayFor(modelItem => item.Cargo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
+                <a class="btn red" onclick="Eliminar('Tipo de Usuario', '@item.Cargo', '@item.Codigo')">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+</div>
+
+<!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modalEliminar">Modal</a>
+
+  <!-- Modal Structure -->
+  <div id="modalEliminar" class="modal">
+    <div class="modal-content">
+      <h4 id="modalTitle">Modal Header</h4>
+      <p id="modalMensaje">A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a id="cmdEliminar" href="#!" class="modal-close waves-effect waves-green btn red">Eliminar</a>
+    </div>
+  </div>
+
+</div>
+
+@section Scripts{
+    <script>
+        let idEliminar;
+        
+        document.getElementById('cmdEliminar').addEventListener('click', () => {
+            ConfirmarEliminar();
+        });
+
+        var Eliminar = function(entity, element, id) {
+            event.stopPropagation();
+            document.getElementById('modalTitle').innerHTML = `Eliminar ${entity}`;
+            document.getElementById('modalMensaje').innerHTML = `¿Seguro desea Eliminar este cargo? ${element}`;
+
+            idEliminar = id;
+
+            let elems = document.getElementById('modalEliminar');
+            let instances = M.Modal.init(elems, { dismissible: false });
+            instances.open()
+        }
+
+       var ConfirmarEliminar = function() {
+            $.ajax({
+                type: 'POST',
+                url: 'TipoUsuarios/Delete',
+                data: { id: idEliminar }
+            })
+                .done(function(data) {
+                    //console.log(data.codigo);
+                    document.getElementById(`${data.codigo}`).remove();
+                    var toastHTML = '<span>Cargo eliminado Correctamente</span><button class="btn-flat toast-action"><i class="material-icons green-text">check</i></button>';
+                    M.toast({html: toastHTML});
+                })
+                .fail(function() {
+                    var toastHTML = '<span>Error al Eliminar Cargo</span><button class="btn-flat toast-action">Undo</button>';
+                    M.toast({html: toastHTML});
+                });
+        }
+    </script>
+}

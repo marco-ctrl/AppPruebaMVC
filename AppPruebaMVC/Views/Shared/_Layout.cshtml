@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AppPruebaMVC</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+     <link rel="stylesheet" href="~/AppPruebaMVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="blue darken-1"> <!-- navbar content here  --> </nav>
+
+  <ul id="slide-out" class="sidenav sidenav-fixed">
+    <li><div class="user-view">
+      <div class="background">
+        <img class="responsive-img" src="~/image/hospitalFondo.jpg">
+      </div>
+      <a href="#user"><img class="circle" src="~/image/doctor.jpg"></a>
+      <a href="#name"><span class="white-text name">John Doe</span></a>
+      <a href="#email"><span class="white-text name">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a asp-area="" asp-controller="Personas" asp-action="Index"><i class="material-icons">cloud</i>Persona</a></li>
+    <li><a asp-area="" asp-controller="Usuarios" asp-action="Index"><i class="material-icons">cloud</i>Usuarios</a></li>
+    <li><a asp-area="" asp-controller="TipoUsuarios" asp-action="Index"><i class="material-icons">cloud</i>Tipo  Usuarios</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  </ul>
+  <a href="#" data-target="slide-out" class="sidenav-trigger hide-on-large-only"><i class="material-icons">menu</i></a>
+    </header>
+     <main>
+            @RenderBody()
+        </main>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - AppPruebaMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/materialize/js/materialize.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+       $(document).ready(function(){
+     M.AutoInit();
+  });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

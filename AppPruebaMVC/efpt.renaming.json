@@ -1,0 +1,286 @@
+﻿[
+   {
+      "SchemaName": "dbo",
+      "Tables": [
+         {
+            "Columns": [
+               {
+                  "Name": "cacaestcit",
+                  "NewName": "Estado"
+               },
+               {
+                  "Name": "cacafeccit",
+                  "NewName": "Fecha"
+               },
+               {
+                  "Name": "cacahorcit",
+                  "NewName": "Hora"
+               },
+               {
+                  "Name": "facaidusua",
+                  "NewName": "Usuario"
+               },
+               {
+                  "Name": "pacaidcita",
+                  "NewName": "Codigo"
+               },
+               {
+                  "Name": "facaidpers",
+                  "NewName": "Paciente"
+               }
+            ],
+            "Name": "acitcon",
+            "NewName": "Cita"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "caddtipopo",
+                  "NewName": "Tipo"
+               },
+               {
+                  "Name": "paddiddeta",
+                  "NewName": "Codigo"
+               },
+               {
+                  "Name": "faddidresu",
+                  "NewName": "Resultado"
+               },
+               {
+                  "Name": "faddiddiag",
+                  "NewName": "Diagnostico"
+               }
+            ],
+            "Name": "adetdia",
+            "NewName": "DetalleDiagnostico"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "cadgenferm",
+                  "NewName": "Enfermedad"
+               },
+               {
+                  "Name": "padgiddiag",
+                  "NewName": "Codigo"
+               }
+            ],
+            "Name": "adiatico",
+            "NewName": "Diagnostico"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "capsapemat",
+                  "NewName": "ApellidoMaterno"
+               },
+               {
+                  "Name": "capsapepat",
+                  "NewName": "ApellidoPaterno"
+               },
+               {
+                  "Name": "capscelula",
+                  "NewName": "NumeroCelular"
+               },
+               {
+                  "Name": "capscedula",
+                  "NewName": "NumeroCedula"
+               },
+               {
+                  "Name": "capsdirper",
+                  "NewName": "Direccion"
+               },
+               {
+                  "Name": "capsfecnac",
+                  "NewName": "FechaNacimiento"
+               },
+               {
+                  "Name": "capsestciv",
+                  "NewName": "EstadoCivil"
+               },
+               {
+                  "Name": "capsnomper",
+                  "NewName": "Nombre"
+               },
+               {
+                  "Name": "capstelefo",
+                  "NewName": "NumeroTelefono"
+               },
+               {
+                  "Name": "Personaresponsable",
+                  "NewName": "PersonaResponsable"
+               },
+               {
+                  "Name": "capssexoxo",
+                  "NewName": "Sexo"
+               },
+               {
+                  "Name": "papsidpers",
+                  "NewName": "Codigo"
+               }
+            ],
+            "Name": "aperson",
+            "NewName": "Persona"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "carmcantid",
+                  "NewName": "Cantidad"
+               },
+               {
+                  "Name": "carmdosiss",
+                  "NewName": "Dosis"
+               },
+               {
+                  "Name": "carmduraci",
+                  "NewName": "Duracion"
+               },
+               {
+                  "Name": "carmmedica",
+                  "NewName": "Medicamento"
+               },
+               {
+                  "Name": "parmidrece",
+                  "NewName": "Codigo"
+               },
+               {
+                  "Name": "farmidcita",
+                  "NewName": "CodigoCita"
+               }
+            ],
+            "Name": "arecmed",
+            "NewName": "RecetaMedica"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "caruantece",
+                  "NewName": "Antecedentes"
+               },
+               {
+                  "Name": "caruestado",
+                  "NewName": "Estado"
+               },
+               {
+                  "Name": "carufecres",
+                  "NewName": "Fecha"
+               },
+               {
+                  "Name": "carumotcon",
+                  "NewName": "Motivo"
+               },
+               {
+                  "Name": "caruprocit",
+                  "NewName": "ProximaCita"
+               },
+               {
+                  "Name": "carutieenf",
+                  "NewName": "TiempoEnfermedad"
+               },
+               {
+                  "Name": "carutratam",
+                  "NewName": "Tratamiento"
+               },
+               {
+                  "Name": "paruidresu",
+                  "NewName": "Codigo"
+               },
+               {
+                  "Name": "faruidcita",
+                  "NewName": "CodigoCita"
+               }
+            ],
+            "Name": "aresado",
+            "NewName": "Resultado"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "catucarusu",
+                  "NewName": "Cargo"
+               },
+               {
+                  "Name": "patuidtius",
+                  "NewName": "Codigo"
+               }
+            ],
+            "Name": "atipusu",
+            "NewName": "TipoUsuario"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "cauacargoo",
+                  "NewName": "Cargo"
+               },
+               {
+                  "Name": "cauacontra",
+                  "NewName": "Contrasena"
+               },
+               {
+                  "Name": "cauacorele",
+                  "NewName": "Correo"
+               },
+               {
+                  "Name": "cauaespeci",
+                  "NewName": "Especialidad"
+               },
+               {
+                  "Name": "fauaidtuso",
+                  "NewName": "TipoUsuario"
+               },
+               {
+                  "Name": "pauaidusua",
+                  "NewName": "Codigo"
+               }
+            ],
+            "Name": "ausurio",
+            "NewName": "Usuario"
+         },
+         {
+            "Columns": [
+               {
+                  "Name": "catafrecar",
+                  "NewName": "FrecuenciaCardiaca"
+               },
+               {
+                  "Name": "catafreres",
+                  "NewName": "FrecuenciaRespiratoria"
+               },
+               {
+                  "Name": "cataocupac",
+                  "NewName": "Ocupacion"
+               },
+               {
+                  "Name": "catapesoso",
+                  "NewName": "Peso"
+               },
+               {
+                  "Name": "catapreart",
+                  "NewName": "PresionArterial"
+               },
+               {
+                  "Name": "catasatura",
+                  "NewName": "Saturacion"
+               },
+               {
+                  "Name": "Catatemper",
+                  "NewName": "Temperatura"
+               },
+               {
+                  "Name": "pataidtria",
+                  "NewName": "Codigo"
+               },
+               {
+                  "Name": "fataidcita",
+                  "NewName": "CodigoCita"
+               }
+            ],
+            "Name": "Triaje",
+            "NewName": "Triaje"
+         }
+      ],
+      "UseSchemaName": false
+   }
+]

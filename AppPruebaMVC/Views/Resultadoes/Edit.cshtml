@@ -1,0 +1,69 @@
+﻿@model AppPruebaMVC.Data.Models.Resultado
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Resultado</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Antecedentes" class="control-label"></label>
+                <input asp-for="Antecedentes" class="form-control" />
+                <span asp-validation-for="Antecedentes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Motivo" class="control-label"></label>
+                <input asp-for="Motivo" class="form-control" />
+                <span asp-validation-for="Motivo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProximaCita" class="control-label"></label>
+                <input asp-for="ProximaCita" class="form-control" />
+                <span asp-validation-for="ProximaCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TiempoEnfermedad" class="control-label"></label>
+                <input asp-for="TiempoEnfermedad" class="form-control" />
+                <span asp-validation-for="TiempoEnfermedad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tratamiento" class="control-label"></label>
+                <input asp-for="Tratamiento" class="form-control" />
+                <span asp-validation-for="Tratamiento" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Codigo" />
+            <div class="form-group">
+                <label asp-for="CodigoCita" class="control-label"></label>
+                <select asp-for="CodigoCita" class="form-control" asp-items="ViewBag.CodigoCita"></select>
+                <span asp-validation-for="CodigoCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

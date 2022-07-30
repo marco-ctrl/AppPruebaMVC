@@ -1,0 +1,71 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "consultoriobdContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data\/Context",
+   "OutputPath": "Data\/Models",
+   "ProjectRootNamespace": "AppPruebaMVC",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[acitcon]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[adetdia]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[adiatico]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[aperson]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[arecmed]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[aresado]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[atipusu]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ausurio]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Triaje]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "MARCO.consultoriobd",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
