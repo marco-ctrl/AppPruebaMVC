@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -161,14 +157,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.DetalleDiagnosticos.Remove(detalleDiagnostico);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DetalleDiagnosticoExists(string id)
         {
-          return (_context.DetalleDiagnosticos?.Any(e => e.Codigo == id)).GetValueOrDefault();
+            return (_context.DetalleDiagnosticos?.Any(e => e.Codigo == id)).GetValueOrDefault();
         }
     }
 }

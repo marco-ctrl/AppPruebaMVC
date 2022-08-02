@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
+﻿using AppPruebaMVC.Data.Context;
 using AppPruebaMVC.Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,9 +17,9 @@ namespace AppPruebaMVC.Controllers
         // GET: TipoUsuarios
         public async Task<IActionResult> Index()
         {
-              return _context.TipoUsuarios != null ? 
-                          View(await _context.TipoUsuarios.ToListAsync()) :
-                          Problem("Entity set 'consultoriobdContext.TipoUsuarios'  is null.");
+            return _context.TipoUsuarios != null ?
+                        View(await _context.TipoUsuarios.ToListAsync()) :
+                        Problem("Entity set 'consultoriobdContext.TipoUsuarios'  is null.");
         }
 
         // GET: TipoUsuarios/Details/5
@@ -150,7 +145,7 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.TipoUsuarios.Remove(tipoUsuario);
             }
-            
+
             await _context.SaveChangesAsync();
             return Ok(tipoUsuario);
             //return RedirectToAction(nameof(Index));
@@ -158,7 +153,7 @@ namespace AppPruebaMVC.Controllers
 
         private bool TipoUsuarioExists(string id)
         {
-          return (_context.TipoUsuarios?.Any(e => e.Codigo == id)).GetValueOrDefault();
+            return (_context.TipoUsuarios?.Any(e => e.Codigo == id)).GetValueOrDefault();
         }
     }
 }

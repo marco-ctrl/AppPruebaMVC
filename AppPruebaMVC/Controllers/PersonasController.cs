@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
+﻿using AppPruebaMVC.Data.Context;
 using AppPruebaMVC.Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,9 +17,9 @@ namespace AppPruebaMVC.Controllers
         // GET: Personas
         public async Task<IActionResult> Index()
         {
-              return _context.Personas != null ? 
-                          View(await _context.Personas.ToListAsync()) :
-                          Problem("Entity set 'consultoriobdContext.Personas'  is null.");
+            return _context.Personas != null ?
+                        View(await _context.Personas.ToListAsync()) :
+                        Problem("Entity set 'consultoriobdContext.Personas'  is null.");
         }
 
         // GET: Personas/Details/5
@@ -150,14 +145,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Personas.Remove(persona);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PersonaExists(string id)
         {
-          return (_context.Personas?.Any(e => e.Codigo == id)).GetValueOrDefault();
+            return (_context.Personas?.Any(e => e.Codigo == id)).GetValueOrDefault();
         }
     }
 }

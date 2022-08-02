@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
+﻿using AppPruebaMVC.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppPruebaMVC
 {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
+﻿using AppPruebaMVC.Data.Context;
 using AppPruebaMVC.Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,9 +17,9 @@ namespace AppPruebaMVC.Controllers
         // GET: Diagnosticoes
         public async Task<IActionResult> Index()
         {
-              return _context.Diagnosticos != null ? 
-                          View(await _context.Diagnosticos.ToListAsync()) :
-                          Problem("Entity set 'consultoriobdContext.Diagnosticos'  is null.");
+            return _context.Diagnosticos != null ?
+                        View(await _context.Diagnosticos.ToListAsync()) :
+                        Problem("Entity set 'consultoriobdContext.Diagnosticos'  is null.");
         }
 
         // GET: Diagnosticoes/Details/5
@@ -150,14 +145,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Diagnosticos.Remove(diagnostico);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DiagnosticoExists(string id)
         {
-          return (_context.Diagnosticos?.Any(e => e.Codigo == id)).GetValueOrDefault();
+            return (_context.Diagnosticos?.Any(e => e.Codigo == id)).GetValueOrDefault();
         }
     }
 }
