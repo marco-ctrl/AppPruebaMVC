@@ -4,12 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="">
+    <h1>Usuarios</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+    <p>
+        <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+    </p>
+<!--<div class="card col l12">-->
+    <table class="responsive-table highlight">
     <thead>
         <tr>
             <th>
@@ -25,16 +27,16 @@
                 @Html.DisplayNameFor(model => model.Especialidad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodigoNavigation)
+                Persona
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TipoUsuarioNavigation)
+                Cargo
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Cargo)
@@ -49,17 +51,20 @@
                 @Html.DisplayFor(modelItem => item.Especialidad)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoNavigation.Codigo)
+                @Html.DisplayFor(modelItem => item.CodigoNavigation.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TipoUsuarioNavigation.Codigo)
+                @Html.DisplayFor(modelItem => item.TipoUsuarioNavigation.Cargo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+                <a class="btn grey" asp-action="Edit" asp-route-id="@item.Codigo">Edit</a>
+                <a class="btn red" asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
-</table>
+    </table>
+
+</div>
+
+

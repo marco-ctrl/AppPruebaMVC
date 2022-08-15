@@ -3,6 +3,9 @@ using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -31,16 +34,34 @@ namespace AppPruebaMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Acceso(Usuario _usuario)
+        public async Task<IActionResult> Index(Usuario _usuario)
         {
             if (UsuarioExists(_usuario.Correo, _usuario.Contrasena))
             {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, _usuario.Correo),
+                    new Claim("Correo", _usuario.Correo)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                return View(_usuario);
+                return View();
             }
+        }
+
+        public async Task<IActionResult> Salir()
+        {
+            //ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Codigo");
+            //ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Codigo");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Login");
         }
 
         private bool UsuarioExists(string correo, string contrasena)

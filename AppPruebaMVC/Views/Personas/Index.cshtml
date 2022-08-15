@@ -4,96 +4,61 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Persona</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
 </p>
-<table class="table">
+<table class="responsive-table highlight">
     <thead>
-        <tr>
+        <tr class="blue white-text">
             <th>
-                @Html.DisplayNameFor(model => model.Alergia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApellidoMaterno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApellidoPaterno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroCelular)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroCedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaNacimiento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoCivil)
+                Num. Cedula    
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumeroTelefono)
+                Apellido    
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PersonaResponsable)
+                Fecha Nacimiento    
+            </th>
+            
+            <th>
+                Num. Celular
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Sexo)
+                @Html.DisplayNameFor(model => model.Direccion)
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Alergia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApellidoMaterno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApellidoPaterno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroCelular)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.NumeroCedula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaNacimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoCivil)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NumeroTelefono)
+                @Html.DisplayFor(modelItem => item.ApellidoPaterno) @Html.DisplayFor(modelItem => item.ApellidoMaterno)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PersonaResponsable)
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sexo)
+                @Html.DisplayFor(modelItem => item.NumeroCelular)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey"><i class="material-icons">edit</i></a>
+                <a asp-action="Details" asp-route-id="@item.Codigo" class="btn blue"><i class="material-icons">info</i></a>
+                <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn red"><i class="material-icons">delete</i></a>
             </td>
         </tr>
 }

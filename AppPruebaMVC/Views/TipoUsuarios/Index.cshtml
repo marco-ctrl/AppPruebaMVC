@@ -29,9 +29,8 @@
                 @Html.DisplayFor(modelItem => item.Cargo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a class="btn red" onclick="Eliminar('Tipo de Usuario', '@item.Cargo', '@item.Codigo')">Delete</a>
+                <a class="btn grey" asp-action="Edit" asp-route-id="@item.Codigo">Editar</a> |
+                <a class="btn red" onclick="Eliminar('Tipo de Usuario', '@item.Cargo', '@item.Codigo')">Eliminar</a>
             </td>
         </tr>
 }
@@ -42,9 +41,26 @@
 </div>
 
 <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger" href="#modalEliminar">Modal</a>
+  <!--<a class="waves-effect waves-light btn modal-trigger" href="#modalEliminar">Modal</a>-->
 
   <!-- Modal Structure -->
+  <!-- Modal formulario -->
+   <div id="modalFormulario" class="modal">
+    <div class="modal-content">
+      <h4 id="modalTitleFormulario">Modal Header</h4>
+      <div id="formularioBody">
+
+      </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a id="cmdEliminar" href="#!" class="modal-close waves-effect waves-green btn red">Eliminar</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal Elimiar -->
   <div id="modalEliminar" class="modal">
     <div class="modal-content">
       <h4 id="modalTitle">Modal Header</h4>
@@ -76,6 +92,30 @@
             let elems = document.getElementById('modalEliminar');
             let instances = M.Modal.init(elems, { dismissible: false });
             instances.open()
+        }
+
+        var Formulario = function(entity, id) {
+            event.stopPropagation();
+            let uri = `TipoUsuarios/Create`;
+            console.log(uri)
+            document.getElementById('modalTitleFormulario').innerHTML = id === "" ? `Agregar ${entity}` : `Modificar ${entity}`;
+            
+            let elems = document.getElementById('modalFormulario');
+                let instances = M.Modal.init(elems, { dismissible: false });
+            instances.open()
+            $("#formularioBody").load(uri);
+            /*$("#formularioBody").load(uri, function() {
+               // $("#modalFormulario").modal("open");
+                //
+                // M.updateTextFields();
+            });
+            /*document.getElementById('modalMensaje').innerHTML = `¿Seguro desea Eliminar este cargo? ${element}`;
+
+            idEliminar = id;
+
+            let elems = document.getElementById('modalEliminar');
+            let instances = M.Modal.init(elems, { dismissible: false });
+            instances.open()*/
         }
 
        var ConfirmarEliminar = function() {

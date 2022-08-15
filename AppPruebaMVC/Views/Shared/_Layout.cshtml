@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="blue darken-1"> <!-- navbar content here  --> </nav>
+        <!--<nav class="blue darken-1"> <!-- navbar content here  </nav>-->
 
   <ul id="slide-out" class="sidenav sidenav-fixed">
     <li><div class="user-view">
@@ -20,15 +22,22 @@
       </div>
       <a href="#user"><img class="circle" src="~/image/doctor.jpg"></a>
       <a href="#name"><span class="white-text name">John Doe</span></a>
-      <a href="#email"><span class="white-text name">jdandturk@gmail.com</span></a>
+      <a href="#email"><span class="white-text name"></span></a>
     </div></li>
-    <li><a asp-area="" asp-controller="Personas" asp-action="Index"><i class="material-icons">cloud</i>Persona</a></li>
-    <li><a asp-area="" asp-controller="Usuarios" asp-action="Index"><i class="material-icons">cloud</i>Usuarios</a></li>
+    <li><a asp-area="" asp-controller="Personas" asp-action="Index"><i class="material-icons">person</i>Persona</a></li>
+    <li><a asp-area="" asp-controller="Usuarios" asp-action="Index"><i class="material-icons">people</i>Usuarios</a></li>
     <li><a asp-area="" asp-controller="TipoUsuarios" asp-action="Index"><i class="material-icons">cloud</i>Tipo  Usuarios</a></li>
+    <li><a asp-area="" asp-controller="Citums" asp-action="Index"><i class="material-icons">cloud</i>Cita Medica</a></li>
+    <li><a asp-area="" asp-controller="RecetaMedicas" asp-action="Index"><i class="material-icons">cloud</i>Receta Medica</a></li>
+    <li><a asp-area="" asp-controller="Resultadoes" asp-action="Index"><i class="material-icons">cloud</i>Resultados</a></li>
+    <li><a asp-area="" asp-controller="Triajes" asp-action="Index"><i class="material-icons">cloud</i>Triaje</a></li>
+    <li><a asp-area="" asp-controller="Diagnosticoes" asp-action="Index"><i class="material-icons">cloud</i>Diagnostico</a></li>
+    <li><a asp-area="" asp-controller="DetalleDiagnosticoes" asp-action="Index"><i class="material-icons">cloud</i>Detalle Diagnostico</a></li>
+    
     <li><a href="#!">Second Link</a></li>
     <li><div class="divider"></div></li>
     <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    <li><a asp-controller="Login" asp-action="Salir" class="waves-effect">Salir</a></li>
   </ul>
   <a href="#" data-target="slide-out" class="sidenav-trigger hide-on-large-only"><i class="material-icons">menu</i></a>
     </header>
@@ -36,11 +45,11 @@
             @RenderBody()
         </main>
 
-    <footer class="border-top footer text-muted">
+    <!--<footer class="page-footer footer blue">
         <div class="container">
-            &copy; 2022 - AppPruebaMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - AppPruebaMVC
         </div>
-    </footer>
+    </footer>-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/materialize/js/materialize.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

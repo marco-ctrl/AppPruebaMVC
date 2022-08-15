@@ -45,8 +45,8 @@ namespace AppPruebaMVC.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
-            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Codigo");
-            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Codigo");
+            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Nombre");
+            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Cargo");
             return View();
         }
 
@@ -63,8 +63,8 @@ namespace AppPruebaMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Codigo", usuario.Codigo);
-            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Codigo", usuario.TipoUsuario);
+            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Nombre", usuario.Codigo);
+            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Cargo", usuario.TipoUsuario);
             return View(usuario);
         }
 
@@ -81,8 +81,8 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Codigo", usuario.Codigo);
-            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Codigo", usuario.TipoUsuario);
+            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Nombre", usuario.Codigo);
+            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Cargo", usuario.TipoUsuario);
             return View(usuario);
         }
 

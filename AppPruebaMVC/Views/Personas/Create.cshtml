@@ -4,90 +4,118 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="container">
+    <h1>Persona</h1>
 
-<h4>Persona</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<h4>Agregar</h4>
+
+    <div class="row">
+    <div class="col l12">
+        <hr/>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Alergia" class="control-label"></label>
-                <input asp-for="Alergia" class="form-control" />
-                <span asp-validation-for="Alergia" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="Codigo"></label>
+                <input asp-for="Codigo" class="validate" />
+                <span asp-validation-for="Codigo" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ApellidoMaterno" class="control-label"></label>
-                <input asp-for="ApellidoMaterno" class="form-control" />
-                <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="NumeroCedula">Num. Cedula</label>
+                <input asp-for="NumeroCedula" class="validate" />
+                <span asp-validation-for="NumeroCedula" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ApellidoPaterno" class="control-label"></label>
-                <input asp-for="ApellidoPaterno" class="form-control" />
-                <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="Nombre"></label>
+                <input asp-for="Nombre" class="validate" />
+                <span asp-validation-for="Nombre" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NumeroCelular" class="control-label"></label>
-                <input asp-for="NumeroCelular" class="form-control" />
-                <span asp-validation-for="NumeroCelular" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="ApellidoPaterno" >Apellido Paterno</label>
+                <input asp-for="ApellidoPaterno" class="validate" />
+                <span asp-validation-for="ApellidoPaterno" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NumeroCedula" class="control-label"></label>
-                <input asp-for="NumeroCedula" class="form-control" />
-                <span asp-validation-for="NumeroCedula" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="ApellidoMaterno">Apellido Materno</label>
+                <input asp-for="ApellidoMaterno" class="validate" />
+                <span asp-validation-for="ApellidoMaterno" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
-                <span asp-validation-for="Direccion" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="FechaNacimiento">Fecha de Nacimiento</label>
+                <input type="text" asp-for="FechaNacimiento" class="validate datepicker" />
+                <span asp-validation-for="FechaNacimiento" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaNacimiento" class="control-label"></label>
-                <input asp-for="FechaNacimiento" class="form-control" />
-                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="EstadoCivil">Estado Civil</label>
+                <input asp-for="EstadoCivil" class="validate"/>
+                <span asp-validation-for="EstadoCivil" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EstadoCivil" class="control-label"></label>
-                <input asp-for="EstadoCivil" class="form-control" />
-                <span asp-validation-for="EstadoCivil" class="text-danger"></span>
+            <div class="input-field col l6 form-check">
+                <label class="form-check-label">Sexo</label>
+                    <input class="form-check-input" asp-for="Sexo" /> @Html.DisplayNameFor(model => model.Sexo)
+                
             </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="NumeroCelular">Num. Celular</label>
+                <input asp-for="NumeroCelular" class="validate" />
+                <span asp-validation-for="NumeroCelular" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NumeroTelefono" class="control-label"></label>
-                <input asp-for="NumeroTelefono" class="form-control" />
-                <span asp-validation-for="NumeroTelefono" class="text-danger"></span>
+            <div class="input-field col l6">
+                <label asp-for="NumeroTelefono">Num. Telefono</label>
+                <input asp-for="NumeroTelefono" class="validate" />
+                <span asp-validation-for="NumeroTelefono" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PersonaResponsable" class="control-label"></label>
-                <input asp-for="PersonaResponsable" class="form-control" />
+            <div class="input-field col l6">
+                <label asp-for="PersonaResponsable">Persona Responsable</label>
+                <input asp-for="PersonaResponsable" class="validate" />
                 <span asp-validation-for="PersonaResponsable" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Sexo" /> @Html.DisplayNameFor(model => model.Sexo)
-                </label>
+            <div class="input-field col l6">
+                <label asp-for="Alergia"></label>
+                <input asp-for="Alergia" class="validate" />
+                <span asp-validation-for="Alergia" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Codigo" class="control-label"></label>
-                <input asp-for="Codigo" class="form-control" />
-                <span asp-validation-for="Codigo" class="text-danger"></span>
+            
+            
+            
+            
+            <div class="input-field col l6">
+                <label asp-for="Direccion"></label>
+                <textarea asp-for="Direccion" class="validate materialize-textarea"></textarea>
+                <span asp-validation-for="Direccion" class="red-text"></span>
             </div>
+            
+            
+            
+            
+            
+            
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn blue" />
+                <a asp-action="Index" class="btn red">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+<hr />
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                i18n: {
+                    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Agos', 'Sept', 'Oct', 'Nov', 'Dic'],
+                    weekdays: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab'],
+                    weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                },
+                autoClose: true
+            });
+        });
+    </script>
 }
