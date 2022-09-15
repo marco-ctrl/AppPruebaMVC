@@ -4,49 +4,54 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="container">
+    <h1>Cita Medica</h1>
 
-<h4>Citum</h4>
+<h4>Editar</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col l6">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="red-text"></div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
+            <div class="input-field">
+                <label asp-for="Fecha"></label>
+                <input type="text" asp-for="Fecha" class="validate datepicker"/>
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Hora" class="control-label"></label>
-                <input asp-for="Hora" class="form-control" />
-                <span asp-validation-for="Hora" class="text-danger"></span>
+            <div class="input-field">
+                <label asp-for="Hora"></label>
+                <input asp-for="Hora" class="validate" />
+                <span asp-validation-for="Hora" class="red-text"></span>
+            </div>
+            <div class="">
+                <label asp-for="Usuario"></label>
+                <select asp-for="Usuario" class ="validate" asp-items="ViewBag.Usuario"></select>
+            </div>
+            <div class="input-field">
+                <label asp-for="Codigo"></label>
+                <input asp-for="Codigo" class="validate" />
+                <span asp-validation-for="Codigo" class="red-text"></span>
+            </div>
+            <div class="">
+                <label asp-for="Paciente"></label>
+                <select asp-for="Paciente" class ="validate" asp-items="ViewBag.Paciente"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Usuario" class="control-label"></label>
-                <select asp-for="Usuario" class="form-control" asp-items="ViewBag.Usuario"></select>
-                <span asp-validation-for="Usuario" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Codigo" />
-            <div class="form-group">
-                <label asp-for="Paciente" class="control-label"></label>
-                <select asp-for="Paciente" class="form-control" asp-items="ViewBag.Paciente"></select>
-                <span asp-validation-for="Paciente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn blue" />
+                <a asp-action="Index" class="btn red">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    
+</div>
 </div>
 
 @section Scripts {

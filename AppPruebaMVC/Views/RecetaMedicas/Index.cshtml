@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Receta Medica</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
 </p>
-<table class="table">
+<table class="responsive-table highlight">
     <thead>
         <tr>
             <th>
@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Medicamento)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodigoCitaNavigation)
+                Cita
             </th>
             <th></th>
         </tr>
@@ -49,9 +49,8 @@
                 @Html.DisplayFor(modelItem => item.CodigoCitaNavigation.Codigo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey">Editar</a>
+                <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn red">Eliminar</a>
             </td>
         </tr>
 }

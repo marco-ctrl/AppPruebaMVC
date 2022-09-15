@@ -45,8 +45,8 @@ namespace AppPruebaMVC.Controllers
         // GET: Citums/Create
         public IActionResult Create()
         {
-            ViewData["Paciente"] = new SelectList(_context.Personas, "Codigo", "Codigo");
-            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Codigo", "Codigo");
+            ViewData["Paciente"] = new SelectList(_context.Personas, "Codigo", "Nombre");
+            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Codigo", "Correo");
             return View();
         }
 
@@ -81,8 +81,8 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["Paciente"] = new SelectList(_context.Personas, "Codigo", "Codigo", citum.Paciente);
-            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Codigo", "Codigo", citum.Usuario);
+            ViewData["Paciente"] = new SelectList(_context.Personas, "Codigo", "Nombre", citum.Paciente);
+            ViewData["Usuario"] = new SelectList(_context.Usuarios, "Codigo", "Correo", citum.Usuario);
             return View(citum);
         }
 
