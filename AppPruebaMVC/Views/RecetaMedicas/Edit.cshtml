@@ -4,49 +4,55 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="container">
+    <h1>Receta Medica</h1>
 
-<h4>RecetaMedica</h4>
+<h4>Editar</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col l6">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Cantidad" class="control-label"></label>
-                <input asp-for="Cantidad" class="form-control" />
-                <span asp-validation-for="Cantidad" class="text-danger"></span>
+            <div asp-validation-summary="ModelOnly" class="red-text"></div>
+            <div class="input-field">
+                <label asp-for="Cantidad"></label>
+                <input asp-for="Cantidad" class="validate" />
+                <span asp-validation-for="Cantidad" class="red-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Dosis" class="control-label"></label>
+            <div class="input-field">
+                <label asp-for="Dosis"></label>
                 <input asp-for="Dosis" class="form-control" />
                 <span asp-validation-for="Dosis" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Duracion" class="control-label"></label>
-                <input asp-for="Duracion" class="form-control" />
-                <span asp-validation-for="Duracion" class="text-danger"></span>
+            <div class="input-field">
+                <label asp-for="Duracion"></label>
+                <input asp-for="Duracion" class="validate" />
+                <span asp-validation-for="Duracion" class="red-text"></span>
+            </div>
+            <div class="input-field">
+                <label asp-for="Medicamento"></label>
+                <input asp-for="Medicamento" class="validate" />
+                <span asp-validation-for="Medicamento" class="red-text"></span>
+            </div>
+            <div class="input-field">
+                <label asp-for="Codigo"></label>
+                <input asp-for="Codigo" class="validate" />
+                <span asp-validation-for="Codigo" class="red-text"></span>
+            </div>
+            <div class="">
+                <label asp-for="CodigoCita"></label>
+                <select asp-for="CodigoCita"  asp-items="ViewBag.CodigoCita"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Medicamento" class="control-label"></label>
-                <input asp-for="Medicamento" class="form-control" />
-                <span asp-validation-for="Medicamento" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Codigo" />
-            <div class="form-group">
-                <label asp-for="CodigoCita" class="control-label"></label>
-                <select asp-for="CodigoCita" class="form-control" asp-items="ViewBag.CodigoCita"></select>
-                <span asp-validation-for="CodigoCita" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn blue" />
+                <a asp-action="Index" class="btn red">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    
+</div>
 </div>
 
 @section Scripts {
