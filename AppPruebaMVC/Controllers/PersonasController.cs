@@ -2,6 +2,7 @@
 using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static AppPruebaMVC.Data.Models.Persona;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -17,13 +18,16 @@ namespace AppPruebaMVC.Controllers
         // GET: Personas
         public async Task<IActionResult> Index()
         {
+            
+
+
             return _context.Personas != null ?
-                        View(await _context.Personas.ToListAsync()) :
-                        Problem("Entity set 'consultoriobdContext.Personas'  is null.");
+            View(await _context.Personas.ToListAsync()) :
+            Problem("Entity set 'consultoriobdContext.Personas'  is null.");
         }
 
         // GET: Personas/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Personas == null)
             {
@@ -43,6 +47,14 @@ namespace AppPruebaMVC.Controllers
         // GET: Personas/Create
         public IActionResult Create()
         {
+            /*var Geners = new Persona
+            {
+                Generos = new List<Genero>
+                {
+                    new Genero{Id = true, RoleName = "Masculino"},
+                    new Genero {Id = false, RoleName = "Femenino"},
+                }
+            };*/
             return View();
         }
 
@@ -51,7 +63,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Alergia,ApellidoMaterno,ApellidoPaterno,NumeroCelular,NumeroCedula,Direccion,FechaNacimiento,EstadoCivil,Nombre,NumeroTelefono,PersonaResponsable,Sexo,Codigo")] Persona persona)
+        public async Task<IActionResult> Create([Bind("ApellidoMaterno,ApellidoPaterno,NumeroCelular,Cedula,Direccion,FechaNacimiento,Estado,EstadoCivil,Nombre,NumeroTelefono,Sexo")] Persona persona)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +75,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Personas/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.Personas == null)
             {
@@ -83,7 +95,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Alergia,ApellidoMaterno,ApellidoPaterno,NumeroCelular,NumeroCedula,Direccion,FechaNacimiento,EstadoCivil,Nombre,NumeroTelefono,PersonaResponsable,Sexo,Codigo")] Persona persona)
+        public async Task<IActionResult> Edit(int id, [Bind("ApellidoMaterno,ApellidoPaterno,NumeroCelular,Cedula,Direccion,FechaNacimiento,Estado,EstadoCivil,Nombre,NumeroTelefono,Sexo,Codigo")] Persona persona)
         {
             if (id != persona.Codigo)
             {
@@ -113,44 +125,42 @@ namespace AppPruebaMVC.Controllers
             return View(persona);
         }
 
-        // GET: Personas/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // GET: Personas/Edit/5
+        public async Task<IActionResult> Baja(int id)
         {
             if (id == null || _context.Personas == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas
-                .FirstOrDefaultAsync(m => m.Codigo == id);
+            var persona = await _context.Personas.FindAsync(id);
             if (persona == null)
             {
                 return NotFound();
             }
-
             return View(persona);
         }
 
-        // POST: Personas/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id, [Bind("Estado, Codigo")] Persona persona)
         {
             if (_context.Personas == null)
             {
-                return Problem("Entity set 'consultoriobdContext.Personas'  is null.");
+                return Problem("Entity set 'consultoriobdContext.TipoUsuarios'  is null.");
             }
-            var persona = await _context.Personas.FindAsync(id);
-            if (persona != null)
+            var tipoUsuario = await _context.Personas.FindAsync(id);
+            if (tipoUsuario != null)
             {
-                _context.Personas.Remove(persona);
+                _context.Personas.Update(tipoUsuario);
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Ok(tipoUsuario);
+            //return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonaExists(string id)
+        private bool PersonaExists(int id)
         {
             return (_context.Personas?.Any(e => e.Codigo == id)).GetValueOrDefault();
         }

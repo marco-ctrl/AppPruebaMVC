@@ -4,67 +4,48 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="">
+<div class="container">
     <h1>Usuarios</h1>
 
-    <p>
-        <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
-    </p>
-<!--<div class="card col l12">-->
-    <table class="responsive-table highlight">
+<p>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue tooltipped" data-position="bottom" data-tooltip="Agregar Usuario"><i class="fa-solid fa-plus fa-3x"></i></a>
+</p>
+<table class="responsive-table striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cargo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contrasena)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Correo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Especialidad)
+                Usuario
             </th>
             <th>
-                Persona
+                Nombre
             </th>
-            <th>
-                Cargo
-            </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+@foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cargo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contrasena)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Correo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Especialidad)
+                @Html.DisplayFor(modelItem => item.Usuario1)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoNavigation.Nombre)
+                @Html.DisplayFor(modelItem => item.CodPersonaNavigation.Nombre) @Html.DisplayFor(modelItem => item.CodPersonaNavigation.ApellidoPaterno) @Html.DisplayFor(modelItem => item.CodPersonaNavigation.ApellidoMaterno)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TipoUsuarioNavigation.Cargo)
-            </td>
-            <td>
-                <a class="btn grey" asp-action="Edit" asp-route-id="@item.Codigo">Editar</a>
-                <a class="btn red" asp-action="Delete" asp-route-id="@item.Codigo">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Usuario"><i class="fa-solid fa-pen-to-square"></i></a>
+                @*<!--<a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |-->*@
+                <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Usuario"><i class="fa-solid fa-trash"></i></a>
             </td>
         </tr>
-    }
+}
     </tbody>
-    </table>
+</table>
 
 </div>
-
 

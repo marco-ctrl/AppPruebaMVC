@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Receta Medica</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+    <a asp-action="Create">Create New</a>
 </p>
-<table class="responsive-table highlight">
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -22,10 +22,7 @@
                 @Html.DisplayNameFor(model => model.Duracion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Medicamento)
-            </th>
-            <th>
-                Cita
+                @Html.DisplayNameFor(model => model.CodMedicamentoNavigation)
             </th>
             <th></th>
         </tr>
@@ -43,14 +40,12 @@
                 @Html.DisplayFor(modelItem => item.Duracion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Medicamento)
+                @Html.DisplayFor(modelItem => item.CodMedicamentoNavigation.Codigo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoCitaNavigation.Codigo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey">Editar</a>
-                <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn red">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
             </td>
         </tr>
 }

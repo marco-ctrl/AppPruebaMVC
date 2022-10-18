@@ -5,15 +5,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AppPruebaMVC</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Consultorio Medico Visacho</title>
+    <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
      <link rel="stylesheet" href="~/AppPruebaMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <!--<nav class="blue darken-1"> <!-- navbar content here  </nav>-->
+        <nav class="blue"> </nav>
 
   <ul id="slide-out" class="sidenav sidenav-fixed">
     <li><div class="user-view">
@@ -24,15 +24,20 @@
       <a href="#name"><span class="white-text name">John Doe</span></a>
       <a href="#email"><span class="white-text name"></span></a>
     </div></li>
-    <li><a asp-area="" asp-controller="Personas" asp-action="Index"><i class="material-icons">person</i>Persona</a></li>
-    <li><a asp-area="" asp-controller="Usuarios" asp-action="Index"><i class="material-icons">people</i>Usuarios</a></li>
-    <li><a asp-area="" asp-controller="TipoUsuarios" asp-action="Index"><i class="material-icons">cloud</i>Tipo  Usuarios</a></li>
-    <li><a asp-area="" asp-controller="Citums" asp-action="Index"><i class="material-icons">cloud</i>Cita Medica</a></li>
-    <li><a asp-area="" asp-controller="RecetaMedicas" asp-action="Index"><i class="material-icons">cloud</i>Receta Medica</a></li>
-    <li><a asp-area="" asp-controller="Resultadoes" asp-action="Index"><i class="material-icons">cloud</i>Resultados</a></li>
-    <li><a asp-area="" asp-controller="Triajes" asp-action="Index"><i class="material-icons">cloud</i>Triaje</a></li>
-    <li><a asp-area="" asp-controller="Diagnosticoes" asp-action="Index"><i class="material-icons">cloud</i>Diagnostico</a></li>
-    <li><a asp-area="" asp-controller="DetalleDiagnosticoes" asp-action="Index"><i class="material-icons">cloud</i>Detalle Diagnostico</a></li>
+    <li><a asp-area="" asp-controller="Personas" asp-action="Index"><i class="fa-solid fa-users fa-2x"></i>Persona</a></li>
+    <li><a asp-area="" asp-controller="Usuarios" asp-action="Index"><i class="fa-solid fa-user fa-2x"></i>Usuarios</a></li>
+    <li><a asp-area="" asp-controller="RolUsuarios" asp-action="Index"><i class="fa-solid fa-user-shield fa-2x"></i>Rol de Usuarios</a></li>
+    <li><a asp-area="" asp-controller="Pacientes" asp-action="Index"><i class="fa-solid fa-user-injured fa-2x"></i>Paciente</a></li>
+    <li><a asp-area="" asp-controller="Doctors" asp-action="Index"><i class="fa-solid fa-user-doctor fa-2x"></i>Doctor</a></li>
+    <li><a asp-area="" asp-controller="Enfermeras" asp-action="Index"><i class="fa-solid fa-user-nurse fa-2x"></i>Enfermera</a></li>
+    <li><a asp-area="" asp-controller="CitaMedicas" asp-action="Index"><i class="fa-solid fa-notes-medical fa-2x"></i>Cita Medica</a></li>
+    <li><a asp-area="" asp-controller="Diagnosticoes" asp-action="Index"><i class="fa-solid fa-comment-medical fa-2x"></i>Diagnostico</a></li>
+    <li><a asp-area="" asp-controller="Enfermedads" asp-action="Index"><i class="fa-solid fa-disease fa-2x"></i>Enfermedades</a></li>
+    <li><a asp-area="" asp-controller="Medicamentoes" asp-action="Index"><i class="fa-solid fa-pills fa-2x"></i>Medicamentos</a></li>
+    <li><a asp-area="" asp-controller="RecetaMedicas" asp-action="Index"><i class="fa-solid fa-file-prescription fa-2x"></i>Receta Medica</a></li>
+    <li><a asp-area="" asp-controller="Resultadoes" asp-action="Index"><i class="fa-solid fa-square-poll-horizontal fa-2x"></i>Resultado</a></li>
+    <li><a asp-area="" asp-controller="Tratamiento" asp-action="Index"><i class="fa-solid fa-prescription-bottle-medical fa-2x"></i>Tratamiento</a></li>
+    
     
     <li><a href="#!">Second Link</a></li>
     <li><div class="divider"></div></li>

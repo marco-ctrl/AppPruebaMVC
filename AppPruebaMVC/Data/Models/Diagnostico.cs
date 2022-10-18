@@ -7,14 +7,12 @@ namespace AppPruebaMVC.Data.Models
 {
     public partial class Diagnostico
     {
-        public Diagnostico()
-        {
-            DetalleDiagnosticos = new HashSet<DetalleDiagnostico>();
-        }
+        public string TipoDiagnostico { get; set; }
+        public int Codigo { get; set; }
+        public int CodResultado { get; set; }
+        public int CodEnfermedad { get; set; }
 
-        public string Enfermedad { get; set; }
-        public string Codigo { get; set; }
-
-        public virtual ICollection<DetalleDiagnostico> DetalleDiagnosticos { get; set; }
+        public virtual Enfermedad CodEnfermedadNavigation { get; set; }
+        public virtual Resultado CodResultadoNavigation { get; set; }
     }
 }

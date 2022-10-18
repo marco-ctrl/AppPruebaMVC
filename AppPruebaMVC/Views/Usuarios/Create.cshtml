@@ -5,54 +5,72 @@
 }
 
 <div class="container">
-<h1>Usuarios</h1>
+    <h1>Usuario</h1>
 
 <h4>Agregar</h4>
 <hr />
 <div class="row">
-    <div class="col l12">
+    <div class="col l8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="red-text"></div>
-            <div class="input-field col l6">
-                <label asp-for="Cargo"></label>
-                <input asp-for="Cargo" class="validate" />
-                <span asp-validation-for="Cargo" class="red-text"></span>
+            <div class="input-field col l12">
+                
+                <select asp-for="CodPersona" asp-items="ViewBag.CodPersona"></select>
+                <label asp-for="CodPersona">Persona</label>
             </div>
-            <div class="input-field col l6">
+            <div class="input-field col l12">
+                <input type="text" id="autocomplete-input" class="autocomplete">
+                <label for="autocomplete-input">Autocomplete</label>
+            </div>
+            <div class="input-field col l12">
+                <label asp-for="Usuario1">Usuario</label>
+                <input asp-for="Usuario1"/>
+                <span asp-validation-for="Usuario1" class="red-text"></span>
+            </div>
+            <div class="input-field col l12">
                 <label asp-for="Contrasena"></label>
                 <input type="password" asp-for="Contrasena" class="validate" />
                 <span asp-validation-for="Contrasena" class="red-text"></span>
             </div>
-            <div class="input-field col l6">
+            <div class="input-field col l12">
                 <label asp-for="Correo"></label>
                 <input asp-for="Correo" class="validate" />
                 <span asp-validation-for="Correo" class="red-text"></span>
             </div>
-            <div class="input-field col l6">
-                <label asp-for="Especialidad"></label>
-                <input asp-for="Especialidad" class="validate" />
-                <span asp-validation-for="Especialidad" class="red-text"></span>
-            </div>
-            <div class="range-field col l6">
-                <label asp-for="TipoUsuario">Tipo de Usuario</label>
-                <select asp-for="TipoUsuario" class ="validate" asp-items="ViewBag.TipoUsuario"></select>
-            </div>
-            <div class="range-field col l6">
-                <label asp-for="Codigo">Persona</label>
-                <select asp-for="Codigo" class ="validate" asp-items="ViewBag.Codigo"></select>
-            </div>
-            <div class="form-group col l6">
+            
+            <div class="form-group">
                 <input type="submit" value="Guardar" class="btn blue" />
-                <a class="btn red" asp-action="Index">Cancelar</a>
+                <a asp-action="Index" class="btn red">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
 
-</div>
-
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+    $('#input.autocomplete').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "@Url.Action("BusquedaPersona","Home")?busqueda=" + request.term,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    response(data)
+                },
+            })
+        }
+        /*data: {
+            "Apple": null,
+            "Microsoft": null,
+            "Google": 'https://placehold.it/250x250'
+        },*/
+    });
+});
+    </script>
+    
+    <!--<script src="~/js/Usuario.js"></script>-->
 }
+    
+
+

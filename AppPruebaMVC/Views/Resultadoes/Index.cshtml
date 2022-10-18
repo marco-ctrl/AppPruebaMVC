@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Resultados</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+    <a asp-action="Create">Create New</a>
 </p>
-<table class="responsive-table highlight">
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -19,22 +19,22 @@
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fecha)
+                @Html.DisplayNameFor(model => model.FechaResultado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Motivo)
+                @Html.DisplayNameFor(model => model.MotivoConsulta)
             </th>
             <th>
-                Proxima Cita
+                @Html.DisplayNameFor(model => model.ProximaCita)
             </th>
             <th>
-                Tiempo de Enfermedad
+                @Html.DisplayNameFor(model => model.TiempoEnfermedad)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tratamiento)
             </th>
             <th>
-                Cita
+                @Html.DisplayNameFor(model => model.FarscodresNavigation)
             </th>
             <th></th>
         </tr>
@@ -49,10 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
+                @Html.DisplayFor(modelItem => item.FechaResultado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Motivo)
+                @Html.DisplayFor(modelItem => item.MotivoConsulta)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProximaCita)
@@ -64,11 +64,12 @@
                 @Html.DisplayFor(modelItem => item.Tratamiento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoCitaNavigation.Codigo)
+                @Html.DisplayFor(modelItem => item.FarscodresNavigation.Codigo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey">Editar</a>
-                <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn red">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@item.Parscodres">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Parscodres">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Parscodres">Delete</a>
             </td>
         </tr>
 }

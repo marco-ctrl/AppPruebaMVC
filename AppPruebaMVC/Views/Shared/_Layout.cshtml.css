@@ -46,3 +46,29 @@ button.accept-policy {
     white-space: nowrap;
     line-height: 60px;
 }
+
+.sidenav::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+    .sidenav::-webkit-scrollbar:vertical {
+        width: 10px;
+    }
+
+.sidenav::-webkit-scrollbar-button:increment, .sidenav::-webkit-scrollbar-button {
+    display: none;
+}
+
+.sidenav::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.sidenav::-webkit-scrollbar-thumb {
+    background-color: #808080;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.sidenav::-webkit-scrollbar-track {
+    border-radius: 10px;
+}

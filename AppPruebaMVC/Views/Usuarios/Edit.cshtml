@@ -4,54 +4,43 @@
     ViewData["Title"] = "Edit";
 }
 
-<div class="container">
-<h1>Usuarios</h1>
+<h1>Edit</h1>
 
-<h4>Editar</h4>
+<h4>Usuario</h4>
 <hr />
 <div class="row">
-    <div class="col l12">
+    <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="red-text"></div>
-            <div class="input-field col l6">
-                <label asp-for="Cargo"></label>
-                <input asp-for="Cargo" class="validate" />
-                <span asp-validation-for="Cargo" class="red-text"></span>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Contrasena" class="control-label"></label>
+                <input asp-for="Contrasena" class="form-control" />
+                <span asp-validation-for="Contrasena" class="text-danger"></span>
             </div>
-            <div class="input-field col l6">
-                <label asp-for="Contrasena"></label>
-                <input type="password" asp-for="Contrasena" class="validate" />
-                <span asp-validation-for="Contrasena" class="red-text"></span>
+            <div class="form-group">
+                <label asp-for="Correo" class="control-label"></label>
+                <input asp-for="Correo" class="form-control" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
-            <div class="input-field col l6">
-                <label asp-for="Correo"></label>
-                <input asp-for="Correo" class="validate" />
-                <span asp-validation-for="Correo" class="red-text"></span>
+            <div class="form-group">
+                <label asp-for="Usuario1" class="control-label"></label>
+                <input asp-for="Usuario1" class="form-control" />
+                <span asp-validation-for="Usuario1" class="text-danger"></span>
             </div>
-            <div class="input-field col l6">
-                <label asp-for="Especialidad"></label>
-                <input asp-for="Especialidad" class="validate" />
-                <span asp-validation-for="Especialidad" class="red-text"></span>
+            <input type="hidden" asp-for="Codigo" />
+            <div class="form-group">
+                <label asp-for="CodPersona" class="control-label"></label>
+                <select asp-for="CodPersona" class="form-control" asp-items="ViewBag.CodPersona"></select>
+                <span asp-validation-for="CodPersona" class="text-danger"></span>
             </div>
-            <div class="range-field col l6">
-                <label asp-for="TipoUsuario">Tipo de Usuario</label>
-                <select asp-for="TipoUsuario" class ="validate" asp-items="ViewBag.TipoUsuario"></select>
-            </div>
-            <div class="range-field col l6">
-                <label asp-for="Codigo">Persona</label>
-                <select asp-for="Codigo" class ="validate" asp-items="ViewBag.Codigo"></select>
-            </div>
-            <div class="form-group col l6">
-                <input type="submit" value="Guardar" class="btn blue" />
-                <a class="btn red" asp-action="Index">Cancelar</a>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

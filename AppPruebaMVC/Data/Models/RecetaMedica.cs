@@ -7,13 +7,18 @@ namespace AppPruebaMVC.Data.Models
 {
     public partial class RecetaMedica
     {
-        public string Cantidad { get; set; }
-        public string Dosis { get; set; }
-        public string Duracion { get; set; }
-        public string Medicamento { get; set; }
-        public string Codigo { get; set; }
-        public string CodigoCita { get; set; }
+        public RecetaMedica()
+        {
+            Tratamientos = new HashSet<Tratamiento>();
+        }
 
-        public virtual Citum CodigoCitaNavigation { get; set; }
+        public int Cantidad { get; set; }
+        public double Dosis { get; set; }
+        public int Duracion { get; set; }
+        public int CodMedicamento { get; set; }
+        public int Codigo { get; set; }
+
+        public virtual Medicamento CodMedicamentoNavigation { get; set; }
+        public virtual ICollection<Tratamiento> Tratamientos { get; set; }
     }
 }

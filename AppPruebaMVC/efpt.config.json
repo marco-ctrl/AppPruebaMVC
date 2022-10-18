@@ -8,21 +8,46 @@
    "ModelNamespace": null,
    "OutputContextPath": "Data\/Context",
    "OutputPath": "Data\/Models",
+   "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "AppPruebaMVC",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
-         "Name": "[dbo].[acitcon]",
+         "Name": "[dbo].[aadmici]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[adetdia]",
+         "Name": "[dbo].[aadmini]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[adiatico]",
+         "Name": "[dbo].[acitmed]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[adiagno]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[adoctor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[aenferm]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[aenfmed]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[amedica]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[apacient]",
          "ObjectType": 0
       },
       {
@@ -34,23 +59,27 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[aresado]",
+         "Name": "[dbo].[aresult]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[atipusu]",
+         "Name": "[dbo].[aroluse]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ausurio]",
+         "Name": "[dbo].[atratam]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Triaje]",
+         "Name": "[dbo].[ausuari]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ausurol]",
          "ObjectType": 0
       }
    ],
-   "UiHint": "MARCO.consultoriobd",
+   "UiHint": "MARCO.consultoriobd1",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,
@@ -67,5 +96,6 @@
    "UseNodaTime": false,
    "UseNullableReferences": false,
    "UseSchemaFolders": false,
-   "UseSpatial": false
+   "UseSpatial": false,
+   "UseT4": false
 }

@@ -4,73 +4,63 @@
     ViewData["Title"] = "Edit";
 }
 
-<div class="container">
-   <h1>Resultado</h1>
+<h1>Edit</h1>
 
-<h4>Editar</h4>
+<h4>Resultado</h4>
 <hr />
 <div class="row">
-    <div class="col l12">
+    <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="red-text"></div>
-            <div class="input-field col l6">
-                <label asp-for="Antecedentes"></label>
-                <input asp-for="Antecedentes" class="validate" />
-                <span asp-validation-for="Antecedentes" class="red-text"></span>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Antecedentes" class="control-label"></label>
+                <input asp-for="Antecedentes" class="form-control" />
+                <span asp-validation-for="Antecedentes" class="text-danger"></span>
             </div>
-            <div class="col l6">
+            <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
                 </label>
             </div>
-            <div class="input-field col l6">
-                <label asp-for="Fecha"></label>
-                <input type="text" asp-for="Fecha" class="validate datepicker" />
-                <span asp-validation-for="Fecha" class="red-text"></span>
-            </div>
-            <div class="input-field col l6">
-                <label asp-for="Motivo"></label>
-                <input asp-for="Motivo" class="validate" />
-                <span asp-validation-for="Motivo" class="red-text"></span>
-            </div>
-            <div class="input-field col l6">
-                <label asp-for="ProximaCita">Proxim Cita</label>
-                <input type="text" asp-for="ProximaCita" class="validate datepicker" />
-                <span asp-validation-for="ProximaCita" class="red-text"></span>
-            </div>
-            <div class="input-field col l6">
-                <label asp-for="TiempoEnfermedad">Tiempo Enfermedad</label>
-                <input asp-for="TiempoEnfermedad" class="validate" />
-                <span asp-validation-for="TiempoEnfermedad" class="red-text"></span>
-            </div>
-            <div class="input-field col l6">
-                <label asp-for="Tratamiento"></label>
-                <input asp-for="Tratamiento" class="validate" />
-                <span asp-validation-for="Tratamiento" class="red-text"></span>
-            </div>
-            <div class="input-field col l6">
-                <label asp-for="Codigo"></label>
-                <input asp-for="Codigo" class="validate" />
-                <span asp-validation-for="Codigo" class="red-text"></span>
-            </div>
-            <div class="col l6">
-                <label asp-for="CodigoCita">Cita</label>
-                <select asp-for="CodigoCita" class ="form-control" asp-items="ViewBag.CodigoCita"></select>
-            </div>
-            <br />
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn blue" />
-                <a asp-action="Index" class="btn red">Cancelar</a>
+                <label asp-for="FechaResultado" class="control-label"></label>
+                <input asp-for="FechaResultado" class="form-control" />
+                <span asp-validation-for="FechaResultado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MotivoConsulta" class="control-label"></label>
+                <input asp-for="MotivoConsulta" class="form-control" />
+                <span asp-validation-for="MotivoConsulta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProximaCita" class="control-label"></label>
+                <input asp-for="ProximaCita" class="form-control" />
+                <span asp-validation-for="ProximaCita" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TiempoEnfermedad" class="control-label"></label>
+                <input asp-for="TiempoEnfermedad" class="form-control" />
+                <span asp-validation-for="TiempoEnfermedad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tratamiento" class="control-label"></label>
+                <input asp-for="Tratamiento" class="form-control" />
+                <span asp-validation-for="Tratamiento" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Parscodres" />
+            <div class="form-group">
+                <label asp-for="Farscodres" class="control-label"></label>
+                <select asp-for="Farscodres" class="form-control" asp-items="ViewBag.Farscodres"></select>
+                <span asp-validation-for="Farscodres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    
-</div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

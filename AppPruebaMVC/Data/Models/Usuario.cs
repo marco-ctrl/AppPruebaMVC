@@ -9,18 +9,18 @@ namespace AppPruebaMVC.Data.Models
     {
         public Usuario()
         {
-            Cita = new HashSet<Citum>();
+            CitaMedicas = new HashSet<CitaMedica>();
+            RolUsuario1s = new HashSet<RolUsuario1>();
         }
 
-        public string Cargo { get; set; }
         public string Contrasena { get; set; }
         public string Correo { get; set; }
-        public string Especialidad { get; set; }
-        public string TipoUsuario { get; set; }
-        public string Codigo { get; set; }
+        public string Usuario1 { get; set; }
+        public int Codigo { get; set; }
+        public int CodPersona { get; set; }
 
-        public virtual Persona CodigoNavigation { get; set; }
-        public virtual TipoUsuario TipoUsuarioNavigation { get; set; }
-        public virtual ICollection<Citum> Cita { get; set; }
+        public virtual Persona CodPersonaNavigation { get; set; }
+        public virtual ICollection<CitaMedica> CitaMedicas { get; set; }
+        public virtual ICollection<RolUsuario1> RolUsuario1s { get; set; }
     }
 }

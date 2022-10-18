@@ -1,7 +1,12 @@
-﻿using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -17,13 +22,12 @@ namespace AppPruebaMVC.Controllers
         // GET: Diagnosticoes
         public async Task<IActionResult> Index()
         {
-            return _context.Diagnosticos != null ?
-                        View(await _context.Diagnosticos.ToListAsync()) :
-                        Problem("Entity set 'consultoriobdContext.Diagnosticos'  is null.");
+            var consultoriobdContext = _context.Diagnosticos.Include(d => d.CodEnfermedadNavigation).Include(d => d.CodResultadoNavigation);
+            return View(await consultoriobdContext.ToListAsync());
         }
 
         // GET: Diagnosticoes/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Diagnosticos == null)
             {
@@ -31,6 +35,8 @@ namespace AppPruebaMVC.Controllers
             }
 
             var diagnostico = await _context.Diagnosticos
+                .Include(d => d.CodEnfermedadNavigation)
+                .Include(d => d.CodResultadoNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (diagnostico == null)
             {
@@ -43,6 +49,8 @@ namespace AppPruebaMVC.Controllers
         // GET: Diagnosticoes/Create
         public IActionResult Create()
         {
+            ViewData["CodEnfermedad"] = new SelectList(_context.Enfermedads, "Codigo", "Codigo");
+            ViewData["CodResultado"] = new SelectList(_context.Resultados, "Parscodres", "Parscodres");
             return View();
         }
 
@@ -51,7 +59,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Enfermedad,Codigo")] Diagnostico diagnostico)
+        public async Task<IActionResult> Create([Bind("TipoDiagnostico,Codigo,CodResultado,CodEnfermedad")] Diagnostico diagnostico)
         {
             if (ModelState.IsValid)
             {
@@ -59,11 +67,13 @@ namespace AppPruebaMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CodEnfermedad"] = new SelectList(_context.Enfermedads, "Codigo", "Codigo", diagnostico.CodEnfermedad);
+            ViewData["CodResultado"] = new SelectList(_context.Resultados, "Parscodres", "Parscodres", diagnostico.CodResultado);
             return View(diagnostico);
         }
 
         // GET: Diagnosticoes/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.Diagnosticos == null)
             {
@@ -75,6 +85,8 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
+            ViewData["CodEnfermedad"] = new SelectList(_context.Enfermedads, "Codigo", "Codigo", diagnostico.CodEnfermedad);
+            ViewData["CodResultado"] = new SelectList(_context.Resultados, "Parscodres", "Parscodres", diagnostico.CodResultado);
             return View(diagnostico);
         }
 
@@ -83,7 +95,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Enfermedad,Codigo")] Diagnostico diagnostico)
+        public async Task<IActionResult> Edit(int id, [Bind("TipoDiagnostico,Codigo,CodResultado,CodEnfermedad")] Diagnostico diagnostico)
         {
             if (id != diagnostico.Codigo)
             {
@@ -110,11 +122,13 @@ namespace AppPruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CodEnfermedad"] = new SelectList(_context.Enfermedads, "Codigo", "Codigo", diagnostico.CodEnfermedad);
+            ViewData["CodResultado"] = new SelectList(_context.Resultados, "Parscodres", "Parscodres", diagnostico.CodResultado);
             return View(diagnostico);
         }
 
         // GET: Diagnosticoes/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Diagnosticos == null)
             {
@@ -122,6 +136,8 @@ namespace AppPruebaMVC.Controllers
             }
 
             var diagnostico = await _context.Diagnosticos
+                .Include(d => d.CodEnfermedadNavigation)
+                .Include(d => d.CodResultadoNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (diagnostico == null)
             {
@@ -134,7 +150,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Diagnosticoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Diagnosticos == null)
             {
@@ -145,14 +161,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Diagnosticos.Remove(diagnostico);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DiagnosticoExists(string id)
+        private bool DiagnosticoExists(int id)
         {
-            return (_context.Diagnosticos?.Any(e => e.Codigo == id)).GetValueOrDefault();
+          return _context.Diagnosticos.Any(e => e.Codigo == id);
         }
     }
 }

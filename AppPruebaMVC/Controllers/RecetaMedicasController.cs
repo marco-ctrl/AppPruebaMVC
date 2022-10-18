@@ -1,8 +1,12 @@
-﻿using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -18,12 +22,12 @@ namespace AppPruebaMVC.Controllers
         // GET: RecetaMedicas
         public async Task<IActionResult> Index()
         {
-            var consultoriobdContext = _context.RecetaMedicas.Include(r => r.CodigoCitaNavigation);
+            var consultoriobdContext = _context.RecetaMedicas.Include(r => r.CodMedicamentoNavigation);
             return View(await consultoriobdContext.ToListAsync());
         }
 
         // GET: RecetaMedicas/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.RecetaMedicas == null)
             {
@@ -31,7 +35,7 @@ namespace AppPruebaMVC.Controllers
             }
 
             var recetaMedica = await _context.RecetaMedicas
-                .Include(r => r.CodigoCitaNavigation)
+                .Include(r => r.CodMedicamentoNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (recetaMedica == null)
             {
@@ -44,7 +48,7 @@ namespace AppPruebaMVC.Controllers
         // GET: RecetaMedicas/Create
         public IActionResult Create()
         {
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo");
+            ViewData["CodMedicamento"] = new SelectList(_context.Medicamentos, "Codigo", "Codigo");
             return View();
         }
 
@@ -53,7 +57,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Cantidad,Dosis,Duracion,Medicamento,Codigo,CodigoCita")] RecetaMedica recetaMedica)
+        public async Task<IActionResult> Create([Bind("Cantidad,Dosis,Duracion,CodMedicamento,Codigo")] RecetaMedica recetaMedica)
         {
             if (ModelState.IsValid)
             {
@@ -61,12 +65,12 @@ namespace AppPruebaMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo", recetaMedica.CodigoCita);
+            ViewData["CodMedicamento"] = new SelectList(_context.Medicamentos, "Codigo", "Codigo", recetaMedica.CodMedicamento);
             return View(recetaMedica);
         }
 
         // GET: RecetaMedicas/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.RecetaMedicas == null)
             {
@@ -78,7 +82,7 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo", recetaMedica.CodigoCita);
+            ViewData["CodMedicamento"] = new SelectList(_context.Medicamentos, "Codigo", "Codigo", recetaMedica.CodMedicamento);
             return View(recetaMedica);
         }
 
@@ -87,7 +91,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Cantidad,Dosis,Duracion,Medicamento,Codigo,CodigoCita")] RecetaMedica recetaMedica)
+        public async Task<IActionResult> Edit(int id, [Bind("Cantidad,Dosis,Duracion,CodMedicamento,Codigo")] RecetaMedica recetaMedica)
         {
             if (id != recetaMedica.Codigo)
             {
@@ -114,12 +118,12 @@ namespace AppPruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo", recetaMedica.CodigoCita);
+            ViewData["CodMedicamento"] = new SelectList(_context.Medicamentos, "Codigo", "Codigo", recetaMedica.CodMedicamento);
             return View(recetaMedica);
         }
 
         // GET: RecetaMedicas/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.RecetaMedicas == null)
             {
@@ -127,7 +131,7 @@ namespace AppPruebaMVC.Controllers
             }
 
             var recetaMedica = await _context.RecetaMedicas
-                .Include(r => r.CodigoCitaNavigation)
+                .Include(r => r.CodMedicamentoNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (recetaMedica == null)
             {
@@ -140,7 +144,7 @@ namespace AppPruebaMVC.Controllers
         // POST: RecetaMedicas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.RecetaMedicas == null)
             {
@@ -151,14 +155,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.RecetaMedicas.Remove(recetaMedica);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RecetaMedicaExists(string id)
+        private bool RecetaMedicaExists(int id)
         {
-            return (_context.RecetaMedicas?.Any(e => e.Codigo == id)).GetValueOrDefault();
+          return _context.RecetaMedicas.Any(e => e.Codigo == id);
         }
     }
 }

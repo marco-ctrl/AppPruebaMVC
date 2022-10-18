@@ -1,35 +1,43 @@
 ﻿@model IEnumerable<AppPruebaMVC.Data.Models.Persona>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Persona";
 }
 
-<h1>Persona</h1>
+<h1>Personas</h1>
 
 <p>
-    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue tooltipped" data-position="bottom" data-tooltip="Agregar Persona"><i class="fa-solid fa-plus fa-3x"></i></a>
 </p>
-<table class="responsive-table highlight">
+<table class="responsive-table striped">
     <thead>
-        <tr class="blue white-text">
-            <th>
-                Num. Cedula    
+        <tr>
+             <th>
+                Num. C.I.
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                Nombre
             </th>
             <th>
-                Apellido    
+                Apellido
             </th>
             <th>
-                Fecha Nacimiento    
+                Fec. Nacimiento
             </th>
-            
+            <th>
+                Sexo
+            </th>
             <th>
                 Num. Celular
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Direccion)
+                Num. Telefono
+            </th>
+            <th>
+                Direccion
+            </th>
+            <th>
+                Estado
             </th>
             <th>Acciones</th>
         </tr>
@@ -38,29 +46,111 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NumeroCedula)
+                @Html.DisplayFor(modelItem => item.Cedula)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApellidoPaterno) @Html.DisplayFor(modelItem => item.ApellidoMaterno)
+                @Html.DisplayFor(modelItem => item.ApellidoPaterno)  @Html.DisplayFor(modelItem => item.ApellidoMaterno)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaNacimiento)
             </td>
-            <td>
+            @if (item.Sexo)
+            {
+                <td>
+                   M    
+                </td>
+            }
+            else
+            {
+                 <td>
+                   F
+                </td>   
+            }
+             <td>
                 @Html.DisplayFor(modelItem => item.NumeroCelular)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroTelefono)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey"><i class="material-icons">edit</i></a>
-                <a asp-action="Details" asp-route-id="@item.Codigo" class="btn blue"><i class="material-icons">info</i></a>
-                <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn red"><i class="material-icons">delete</i></a>
+            @if (item.Estado)
+            {
+                <td class="green-text">
+                   Activo    
+                </td>
+                <td>
+                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Persona" onclick="Eliminar('Persona', '@item.Nombre', '@item.Codigo', '@item.ApellidoPaterno', '@item.ApellidoMaterno')"><i class="fa-solid fa-trash"></i></a>
             </td>
+            }
+            else
+            {
+                 <td class="red-text">
+                   Inactivo
+                </td>
+                <td>
+                <a disabled asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a disabled class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Persona" onclick="Eliminar('Persona', '@item.Nombre', '@item.Codigo', '@item.ApellidoPaterno', '@item.ApellidoMaterno')"><i class="fa-solid fa-trash"></i></a>
+            </td>
+            }
+            
         </tr>
 }
     </tbody>
 </table>
+
+<!-- Modal Elimiar -->
+  <div id="modalEliminar" class="modal">
+    <div class="modal-content">
+      <h4 id="modalTitle">Modal Header</h4>
+      <p id="modalMensaje">A bunch of text</p>
+    </div>
+    <div id="BajaBody"></div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a id="cmdEliminar" href="#!" class="modal-close waves-effect waves-green btn red">Eliminar</a>
+    </div>
+  </div>
+
+    @section Scripts{
+    <script>
+        let idEliminar;
+        
+        document.getElementById('cmdEliminar').addEventListener('click', () => {
+            
+            ConfirmarEliminar();
+        });
+        var Eliminar = function(entity, element, id, element1, element2) {
+            event.stopPropagation();
+            document.getElementById('modalTitle').innerHTML = `Eliminar ${entity}`;
+            document.getElementById('modalMensaje').innerHTML = `¿Seguro desea Elimina esta Persona? ${element} ${element1} ${element2}`;
+            idEliminar = id;
+            let elems = document.getElementById('modalEliminar');
+            let instances = M.Modal.init(elems, { dismissible: false });
+            instances.open()
+        }
+       var ConfirmarEliminar = function() {
+           console.log("eliminando" + idEliminar);
+            $.ajax({
+                type: 'POST',
+                url: 'Personas/Delete',
+                data: { id: idEliminar }
+            })
+                .done(function(data) {
+                    console.log(data.codigo);
+                    document.getElementById(`${data.codigo}`).remove();
+                    var toastHTML = '<span>Persona dada baja Correctamente</span><button class="btn-flat toast-action"><i class="material-icons green-text">check</i></button>';
+                    M.toast({html: toastHTML});
+                })
+                .fail(function() {
+                    var toastHTML = '<span>Error al dar de Baja Persona</span><button class="btn-flat toast-action">Undo</button>';
+                    M.toast({html: toastHTML});
+                });
+        }
+    </script>
+}

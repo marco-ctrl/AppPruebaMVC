@@ -9,20 +9,20 @@ namespace AppPruebaMVC.Data.Models
     {
         public Resultado()
         {
-            DetalleDiagnosticos = new HashSet<DetalleDiagnostico>();
+            Diagnosticos = new HashSet<Diagnostico>();
         }
 
         public string Antecedentes { get; set; }
         public bool Estado { get; set; }
-        public DateTime Fecha { get; set; }
-        public string Motivo { get; set; }
+        public DateTime FechaResultado { get; set; }
+        public string MotivoConsulta { get; set; }
         public DateTime ProximaCita { get; set; }
         public string TiempoEnfermedad { get; set; }
         public string Tratamiento { get; set; }
-        public string Codigo { get; set; }
-        public string CodigoCita { get; set; }
+        public int Parscodres { get; set; }
+        public int Farscodres { get; set; }
 
-        public virtual Citum CodigoCitaNavigation { get; set; }
-        public virtual ICollection<DetalleDiagnostico> DetalleDiagnosticos { get; set; }
+        public virtual CitaMedica FarscodresNavigation { get; set; }
+        public virtual ICollection<Diagnostico> Diagnosticos { get; set; }
     }
 }

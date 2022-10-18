@@ -1,8 +1,12 @@
-﻿using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -18,12 +22,12 @@ namespace AppPruebaMVC.Controllers
         // GET: Resultadoes
         public async Task<IActionResult> Index()
         {
-            var consultoriobdContext = _context.Resultados.Include(r => r.CodigoCitaNavigation);
+            var consultoriobdContext = _context.Resultados.Include(r => r.FarscodresNavigation);
             return View(await consultoriobdContext.ToListAsync());
         }
 
         // GET: Resultadoes/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Resultados == null)
             {
@@ -31,8 +35,8 @@ namespace AppPruebaMVC.Controllers
             }
 
             var resultado = await _context.Resultados
-                .Include(r => r.CodigoCitaNavigation)
-                .FirstOrDefaultAsync(m => m.Codigo == id);
+                .Include(r => r.FarscodresNavigation)
+                .FirstOrDefaultAsync(m => m.Parscodres == id);
             if (resultado == null)
             {
                 return NotFound();
@@ -44,7 +48,7 @@ namespace AppPruebaMVC.Controllers
         // GET: Resultadoes/Create
         public IActionResult Create()
         {
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo");
+            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo");
             return View();
         }
 
@@ -53,7 +57,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Antecedentes,Estado,Fecha,Motivo,ProximaCita,TiempoEnfermedad,Tratamiento,Codigo,CodigoCita")] Resultado resultado)
+        public async Task<IActionResult> Create([Bind("Antecedentes,Estado,FechaResultado,MotivoConsulta,ProximaCita,TiempoEnfermedad,Tratamiento,Parscodres,Farscodres")] Resultado resultado)
         {
             if (ModelState.IsValid)
             {
@@ -61,12 +65,12 @@ namespace AppPruebaMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo", resultado.CodigoCita);
+            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.Farscodres);
             return View(resultado);
         }
 
         // GET: Resultadoes/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.Resultados == null)
             {
@@ -78,7 +82,7 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo", resultado.CodigoCita);
+            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.Farscodres);
             return View(resultado);
         }
 
@@ -87,9 +91,9 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Antecedentes,Estado,Fecha,Motivo,ProximaCita,TiempoEnfermedad,Tratamiento,Codigo,CodigoCita")] Resultado resultado)
+        public async Task<IActionResult> Edit(int id, [Bind("Antecedentes,Estado,FechaResultado,MotivoConsulta,ProximaCita,TiempoEnfermedad,Tratamiento,Parscodres,Farscodres")] Resultado resultado)
         {
-            if (id != resultado.Codigo)
+            if (id != resultado.Parscodres)
             {
                 return NotFound();
             }
@@ -103,7 +107,7 @@ namespace AppPruebaMVC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ResultadoExists(resultado.Codigo))
+                    if (!ResultadoExists(resultado.Parscodres))
                     {
                         return NotFound();
                     }
@@ -114,12 +118,12 @@ namespace AppPruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodigoCita"] = new SelectList(_context.Cita, "Codigo", "Codigo", resultado.CodigoCita);
+            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.Farscodres);
             return View(resultado);
         }
 
         // GET: Resultadoes/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Resultados == null)
             {
@@ -127,8 +131,8 @@ namespace AppPruebaMVC.Controllers
             }
 
             var resultado = await _context.Resultados
-                .Include(r => r.CodigoCitaNavigation)
-                .FirstOrDefaultAsync(m => m.Codigo == id);
+                .Include(r => r.FarscodresNavigation)
+                .FirstOrDefaultAsync(m => m.Parscodres == id);
             if (resultado == null)
             {
                 return NotFound();
@@ -140,7 +144,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Resultadoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Resultados == null)
             {
@@ -151,14 +155,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Resultados.Remove(resultado);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ResultadoExists(string id)
+        private bool ResultadoExists(int id)
         {
-            return (_context.Resultados?.Any(e => e.Codigo == id)).GetValueOrDefault();
+          return _context.Resultados.Any(e => e.Parscodres == id);
         }
     }
 }

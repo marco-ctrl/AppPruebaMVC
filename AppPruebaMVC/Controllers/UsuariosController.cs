@@ -1,8 +1,12 @@
-﻿using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -18,12 +22,12 @@ namespace AppPruebaMVC.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            var consultoriobdContext = _context.Usuarios.Include(u => u.CodigoNavigation).Include(u => u.TipoUsuarioNavigation);
+            var consultoriobdContext = _context.Usuarios.Include(u => u.CodPersonaNavigation);
             return View(await consultoriobdContext.ToListAsync());
         }
 
         // GET: Usuarios/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Usuarios == null)
             {
@@ -31,8 +35,7 @@ namespace AppPruebaMVC.Controllers
             }
 
             var usuario = await _context.Usuarios
-                .Include(u => u.CodigoNavigation)
-                .Include(u => u.TipoUsuarioNavigation)
+                .Include(u => u.CodPersonaNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (usuario == null)
             {
@@ -45,8 +48,8 @@ namespace AppPruebaMVC.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
-            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Nombre");
-            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Cargo");
+            ViewData["CodPersona"] = new SelectList(_context.Personas, "Codigo", "Codigo");
+            ViewData["Nombre"] = new SelectList(_context.Personas, "Codigo", "Codigo");
             return View();
         }
 
@@ -55,7 +58,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Cargo,Contrasena,Correo,Especialidad,TipoUsuario,Codigo")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Contrasena,Correo,Usuario1,Codigo,CodPersona")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -63,13 +66,12 @@ namespace AppPruebaMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Nombre", usuario.Codigo);
-            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Cargo", usuario.TipoUsuario);
+            ViewData["CodPersona"] = new SelectList(_context.Personas, "Codigo", "Codigo", usuario.CodPersona);
             return View(usuario);
         }
 
         // GET: Usuarios/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.Usuarios == null)
             {
@@ -81,8 +83,7 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Nombre", usuario.Codigo);
-            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Cargo", usuario.TipoUsuario);
+            ViewData["CodPersona"] = new SelectList(_context.Personas, "Codigo", "Codigo", usuario.CodPersona);
             return View(usuario);
         }
 
@@ -91,7 +92,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Cargo,Contrasena,Correo,Especialidad,TipoUsuario,Codigo")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Contrasena,Correo,Usuario1,Codigo,CodPersona")] Usuario usuario)
         {
             if (id != usuario.Codigo)
             {
@@ -118,13 +119,12 @@ namespace AppPruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Codigo"] = new SelectList(_context.Personas, "Codigo", "Codigo", usuario.Codigo);
-            ViewData["TipoUsuario"] = new SelectList(_context.TipoUsuarios, "Codigo", "Codigo", usuario.TipoUsuario);
+            ViewData["CodPersona"] = new SelectList(_context.Personas, "Codigo", "Codigo", usuario.CodPersona);
             return View(usuario);
         }
 
         // GET: Usuarios/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Usuarios == null)
             {
@@ -132,8 +132,7 @@ namespace AppPruebaMVC.Controllers
             }
 
             var usuario = await _context.Usuarios
-                .Include(u => u.CodigoNavigation)
-                .Include(u => u.TipoUsuarioNavigation)
+                .Include(u => u.CodPersonaNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (usuario == null)
             {
@@ -146,7 +145,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Usuarios == null)
             {
@@ -157,14 +156,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Usuarios.Remove(usuario);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuarioExists(string id)
+        private bool UsuarioExists(int id)
         {
-            return (_context.Usuarios?.Any(e => e.Codigo == id)).GetValueOrDefault();
+          return _context.Usuarios.Any(e => e.Codigo == id);
         }
     }
 }

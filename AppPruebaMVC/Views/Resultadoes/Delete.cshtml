@@ -24,16 +24,16 @@
             @Html.DisplayFor(model => model.Estado)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fecha)
+            @Html.DisplayNameFor(model => model.FechaResultado)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fecha)
+            @Html.DisplayFor(model => model.FechaResultado)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Motivo)
+            @Html.DisplayNameFor(model => model.MotivoConsulta)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Motivo)
+            @Html.DisplayFor(model => model.MotivoConsulta)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ProximaCita)
@@ -54,15 +54,15 @@
             @Html.DisplayFor(model => model.Tratamiento)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CodigoCitaNavigation)
+            @Html.DisplayNameFor(model => model.FarscodresNavigation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodigoCitaNavigation.Codigo)
+            @Html.DisplayFor(model => model.FarscodresNavigation.Codigo)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Codigo" />
+        <input type="hidden" asp-for="Parscodres" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

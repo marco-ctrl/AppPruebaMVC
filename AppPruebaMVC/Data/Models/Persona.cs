@@ -9,24 +9,26 @@ namespace AppPruebaMVC.Data.Models
     {
         public Persona()
         {
-            Cita = new HashSet<Citum>();
+            Usuarios = new HashSet<Usuario>();
         }
 
-        public string Alergia { get; set; }
         public string ApellidoMaterno { get; set; }
         public string ApellidoPaterno { get; set; }
         public string NumeroCelular { get; set; }
-        public string NumeroCedula { get; set; }
+        public string Cedula { get; set; }
         public string Direccion { get; set; }
-        public DateTime FechaNacimiento { get; set; }
+        public bool Estado { get; set; }
         public string EstadoCivil { get; set; }
-        public string Nombre { get; set; }
-        public string NumeroTelefono { get; set; }
-        public string PersonaResponsable { get; set; }
+        public DateTime FechaNacimiento { get; set; }
         public bool Sexo { get; set; }
-        public string Codigo { get; set; }
+        public string NumeroTelefono { get; set; }
+        public int Codigo { get; set; }
+        public string Nombre { get; set; }
 
-        public virtual Usuario Usuario { get; set; }
-        public virtual ICollection<Citum> Cita { get; set; }
+        public virtual Administrativo Administrativo { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        public virtual Enfermera Enfermera { get; set; }
+        public virtual Paciente Paciente { get; set; }
+        public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

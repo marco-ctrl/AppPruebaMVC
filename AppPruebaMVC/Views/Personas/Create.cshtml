@@ -15,14 +15,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="red-text"></div>
             <div class="input-field col l6">
-                <label asp-for="Codigo"></label>
-                <input asp-for="Codigo" class="validate" />
-                <span asp-validation-for="Codigo" class="red-text"></span>
-            </div>
-            <div class="input-field col l6">
-                <label asp-for="NumeroCedula">Num. Cedula</label>
-                <input asp-for="NumeroCedula" class="validate" />
-                <span asp-validation-for="NumeroCedula" class="red-text"></span>
+                <label asp-for="Cedula">Num. Cedula</label>
+                <input asp-for="Cedula" class="validate" />
+                <span asp-validation-for="Cedula" class="red-text"></span>
             </div>
             <div class="input-field col l6">
                 <label asp-for="Nombre"></label>
@@ -45,14 +40,27 @@
                 <span asp-validation-for="FechaNacimiento" class="red-text"></span>
             </div>
             <div class="input-field col l6">
+                 <select asp-for="EstadoCivil">
+                    <option value="" disabled selected>Estado Civil</option>
+                    <option value="SOLTERO/A">SOLTERO/A</option>
+                    <option value="CASADO/A">CASADO/A</option>
+                    <option value="VIUDO/A">VIUDO/A</option>
+                    <option value="DIVORCIADO/A">DIVORCIADO/A</option>
+                </select>
                 <label asp-for="EstadoCivil">Estado Civil</label>
-                <input asp-for="EstadoCivil" class="validate"/>
-                <span asp-validation-for="EstadoCivil" class="red-text"></span>
             </div>
-            <div class="input-field col l6 form-check">
-                <label class="form-check-label">Sexo</label>
-                    <input class="form-check-input" asp-for="Sexo" /> @Html.DisplayNameFor(model => model.Sexo)
-                
+            <div class="input-field col l6">
+                 <fieldset>
+                            <legend>Sexo</legend>
+                            <label>
+                        <input type="radio" asp-for="Sexo" value="true" class="with-gap" /> 
+                    <span>Masculino</span>
+                    </label>
+                    <label>
+                        <input type="radio" asp-for="Sexo" value="false" class="with-gap" /> 
+                    <span>Femenino</span>
+                    </label>
+                        </fieldset>
             </div>
             <div class="input-field col l6">
                 <label asp-for="NumeroCelular">Num. Celular</label>
@@ -64,31 +72,13 @@
                 <input asp-for="NumeroTelefono" class="validate" />
                 <span asp-validation-for="NumeroTelefono" class="red-text"></span>
             </div>
-            <!--<div class="input-field col l6">
-                <label asp-for="PersonaResponsable">Persona Responsable</label>
-                <input asp-for="PersonaResponsable" class="validate" />
-                <span asp-validation-for="PersonaResponsable" class="text-danger"></span>
-            </div>
-            <div class="input-field col l6">
-                <label asp-for="Alergia"></label>
-                <input asp-for="Alergia" class="validate" />
-                <span asp-validation-for="Alergia" class="red-text"></span>
-            </div>-->
-            
-            
-            
-            
-            <div class="input-field col l6">
+            <div class="input-field col l12">
                 <label asp-for="Direccion"></label>
                 <textarea asp-for="Direccion" class="validate materialize-textarea"></textarea>
                 <span asp-validation-for="Direccion" class="red-text"></span>
             </div>
             
-            
-            
-            
-            
-            
+                <input asp-for="Estado" type="hidden" value="true"/>
             <br />
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn blue" />

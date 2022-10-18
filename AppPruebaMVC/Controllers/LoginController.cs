@@ -36,12 +36,12 @@ namespace AppPruebaMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Usuario _usuario)
         {
-            if (UsuarioExists(_usuario.Correo, _usuario.Contrasena))
+            if (UsuarioExists(_usuario.Usuario1, _usuario.Contrasena))
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, _usuario.Correo),
-                    new Claim("Correo", _usuario.Correo)
+                    new Claim(ClaimTypes.Name, _usuario.Usuario1),
+                    new Claim("Usuario", _usuario.Usuario1)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -54,6 +54,7 @@ namespace AppPruebaMVC.Controllers
             {
                 return View();
             }
+            //return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Salir()
@@ -66,7 +67,7 @@ namespace AppPruebaMVC.Controllers
 
         private bool UsuarioExists(string correo, string contrasena)
         {
-            return (_context.Usuarios?.Any(e => e.Correo == correo && e.Contrasena == contrasena)).GetValueOrDefault();
+            return (_context.Usuarios?.Any(e => e.Usuario1 == correo && e.Contrasena == contrasena)).GetValueOrDefault();
         }
     }
 }
