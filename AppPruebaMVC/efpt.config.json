@@ -59,15 +59,14 @@
          "ObjectType": 0
       },
       {
+         "ExcludedColumns": [
+            "farstratam"
+         ],
          "Name": "[dbo].[aresult]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[aroluse]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[atratam]",
          "ObjectType": 0
       },
       {
@@ -77,6 +76,10 @@
       {
          "Name": "[dbo].[ausurol]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sp_busqueda_persona]",
+         "ObjectType": 1
       }
    ],
    "UiHint": "MARCO.consultoriobd1",

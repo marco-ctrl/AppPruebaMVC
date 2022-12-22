@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -27,7 +23,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Pacientes/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Pacientes == null)
             {
@@ -61,6 +57,7 @@ namespace AppPruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                paciente.PersonaEncargada.ToUpper();
                 _context.Add(paciente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -70,7 +67,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Pacientes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Pacientes == null)
             {
@@ -102,6 +99,8 @@ namespace AppPruebaMVC.Controllers
             {
                 try
                 {
+                    paciente.PersonaEncargada = paciente.PersonaEncargada.ToUpper();
+                    paciente.Alergia = paciente.Alergia.ToUpper();
                     _context.Update(paciente);
                     await _context.SaveChangesAsync();
                 }
@@ -123,7 +122,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Pacientes/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Pacientes == null)
             {
@@ -144,7 +143,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Pacientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.Pacientes == null)
             {
@@ -155,14 +154,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Pacientes.Remove(paciente);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PacienteExists(int id)
+        private bool PacienteExists(int? id)
         {
-          return _context.Pacientes.Any(e => e.Codigo == id);
+            return _context.Pacientes.Any(e => e.Codigo == id);
         }
     }
 }

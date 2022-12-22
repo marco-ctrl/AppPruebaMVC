@@ -32,8 +32,7 @@ namespace AppPruebaMVC.Data.Context
         public virtual DbSet<RecetaMedica> RecetaMedicas { get; set; }
         public virtual DbSet<Resultado> Resultados { get; set; }
         public virtual DbSet<RolUsuario> RolUsuarios { get; set; }
-        public virtual DbSet<RolUsuario1> RolUsuarios1 { get; set; }
-        public virtual DbSet<Tratamiento> Tratamientos { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,9 +46,13 @@ namespace AppPruebaMVC.Data.Context
 
                 entity.Property(e => e.Codigo).HasColumnName("paadcodadm");
 
+                entity.Property(e => e.CodCita).HasColumnName("faadcodcit");
+
                 entity.Property(e => e.CodEnfermera).HasColumnName("faadcodenf");
 
-                entity.Property(e => e.CodPaciente).HasColumnName("faadcodpac");
+                entity.Property(e => e.FechaAdmicion)
+                    .HasColumnType("date")
+                    .HasColumnName("caadfecadm");
 
                 entity.Property(e => e.FrecuenciaCardiaca).HasColumnName("caadfrecar");
 
@@ -69,17 +72,17 @@ namespace AppPruebaMVC.Data.Context
 
                 entity.Property(e => e.Temperatura).HasColumnName("caadtemper");
 
+                entity.HasOne(d => d.CodCitaNavigation)
+                    .WithMany(p => p.Admicions)
+                    .HasForeignKey(d => d.CodCita)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_aadmici_acitmed");
+
                 entity.HasOne(d => d.CodEnfermeraNavigation)
                     .WithMany(p => p.Admicions)
                     .HasForeignKey(d => d.CodEnfermera)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Admicion_Enfermera");
-
-                entity.HasOne(d => d.CodPacienteNavigation)
-                    .WithMany(p => p.Admicions)
-                    .HasForeignKey(d => d.CodPaciente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Admicion_Paciente");
             });
 
             modelBuilder.Entity<Administrativo>(entity =>
@@ -117,7 +120,7 @@ namespace AppPruebaMVC.Data.Context
 
                 entity.Property(e => e.CodDoctor).HasColumnName("facicoddoc");
 
-                entity.Property(e => e.CodEnfermera).HasColumnName("facicodenf");
+                entity.Property(e => e.CodPaciente).HasColumnName("facicodpac");
 
                 entity.Property(e => e.CodUsuario).HasColumnName("facicodusu");
 
@@ -133,11 +136,11 @@ namespace AppPruebaMVC.Data.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Cita_Doctor");
 
-                entity.HasOne(d => d.CodEnfermeraNavigation)
+                entity.HasOne(d => d.CodPacienteNavigation)
                     .WithMany(p => p.CitaMedicas)
-                    .HasForeignKey(d => d.CodEnfermera)
+                    .HasForeignKey(d => d.CodPaciente)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cita_Enfermera");
+                    .HasConstraintName("FK_acitmed_apacient");
 
                 entity.HasOne(d => d.CodUsuarioNavigation)
                     .WithMany(p => p.CitaMedicas)
@@ -216,6 +219,8 @@ namespace AppPruebaMVC.Data.Context
                     .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("caefdesenf");
+
+                entity.Property(e => e.Estado).HasColumnName("caefestenf");
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
@@ -387,21 +392,23 @@ namespace AppPruebaMVC.Data.Context
 
             modelBuilder.Entity<Resultado>(entity =>
             {
-                entity.HasKey(e => e.Parscodres)
+                entity.HasKey(e => e.Codigo)
                     .HasName("PK_Resultado");
 
                 entity.ToTable("aresult");
 
-                entity.Property(e => e.Parscodres).HasColumnName("parscodres");
+                entity.Property(e => e.Codigo).HasColumnName("parscodres");
 
                 entity.Property(e => e.Antecedentes)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("carsantece");
 
-                entity.Property(e => e.Estado).HasColumnName("carsestres");
+                entity.Property(e => e.CodCita).HasColumnName("farscodcit");
 
-                entity.Property(e => e.Farscodres).HasColumnName("farscodres");
+                entity.Property(e => e.Codtratamiento).HasColumnName("farscodtra");
+
+                entity.Property(e => e.Estado).HasColumnName("carsestres");
 
                 entity.Property(e => e.FechaResultado)
                     .HasColumnType("date")
@@ -422,19 +429,45 @@ namespace AppPruebaMVC.Data.Context
                     .IsUnicode(false)
                     .HasColumnName("carstieenf");
 
-                entity.Property(e => e.Tratamiento)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("carstratam");
-
-                entity.HasOne(d => d.FarscodresNavigation)
+                entity.HasOne(d => d.CodCitaNavigation)
                     .WithMany(p => p.Resultados)
-                    .HasForeignKey(d => d.Farscodres)
+                    .HasForeignKey(d => d.CodCita)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Resultado_Cita");
+
+                entity.HasOne(d => d.CodtratamientoNavigation)
+                    .WithMany(p => p.Resultados)
+                    .HasForeignKey(d => d.Codtratamiento)
+                    .HasConstraintName("FK_aresult_arecmed");
             });
 
             modelBuilder.Entity<RolUsuario>(entity =>
+            {
+                entity.HasKey(e => e.Codigo)
+                    .HasName("PK_Userrol");
+
+                entity.ToTable("ausurol");
+
+                entity.Property(e => e.Codigo).HasColumnName("paurcoduro");
+
+                entity.Property(e => e.CodRol).HasColumnName("faurcodrou");
+
+                entity.Property(e => e.CodUsuario).HasColumnName("faurcodusu");
+
+                entity.HasOne(d => d.CodRolNavigation)
+                    .WithMany(p => p.RolUsuarios)
+                    .HasForeignKey(d => d.CodRol)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Userrol_Rol");
+
+                entity.HasOne(d => d.CodUsuarioNavigation)
+                    .WithMany(p => p.RolUsuarios)
+                    .HasForeignKey(d => d.CodUsuario)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Userrol_Usuario");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
             {
                 entity.HasKey(e => e.Codigo)
                     .HasName("PK_Rol");
@@ -448,58 +481,6 @@ namespace AppPruebaMVC.Data.Context
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("carunomrol");
-            });
-
-            modelBuilder.Entity<RolUsuario1>(entity =>
-            {
-                entity.HasKey(e => e.Codigo)
-                    .HasName("PK_Userrol");
-
-                entity.ToTable("ausurol");
-
-                entity.Property(e => e.Codigo).HasColumnName("paurcoduro");
-
-                entity.Property(e => e.Faurcodrou).HasColumnName("faurcodrou");
-
-                entity.Property(e => e.Faurcodusu).HasColumnName("faurcodusu");
-
-                entity.HasOne(d => d.FaurcodrouNavigation)
-                    .WithMany(p => p.RolUsuario1s)
-                    .HasForeignKey(d => d.Faurcodrou)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Userrol_Rol");
-
-                entity.HasOne(d => d.FaurcodusuNavigation)
-                    .WithMany(p => p.RolUsuario1s)
-                    .HasForeignKey(d => d.Faurcodusu)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Userrol_Usuario");
-            });
-
-            modelBuilder.Entity<Tratamiento>(entity =>
-            {
-                entity.HasKey(e => e.Codigo)
-                    .HasName("PK_Tratamiento");
-
-                entity.ToTable("atratam");
-
-                entity.Property(e => e.Codigo).HasColumnName("patmcodtra");
-
-                entity.Property(e => e.CodCita).HasColumnName("fatmcodcit");
-
-                entity.Property(e => e.CodRecetaMedica).HasColumnName("fatmcodrec");
-
-                entity.HasOne(d => d.CodCitaNavigation)
-                    .WithMany(p => p.Tratamientos)
-                    .HasForeignKey(d => d.CodCita)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Tratamiento_Cita");
-
-                entity.HasOne(d => d.CodRecetaMedicaNavigation)
-                    .WithMany(p => p.Tratamientos)
-                    .HasForeignKey(d => d.CodRecetaMedica)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Tratamiento_Recetamedica");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
@@ -525,6 +506,8 @@ namespace AppPruebaMVC.Data.Context
                     .IsUnicode(false)
                     .HasColumnName("causcorele");
 
+                entity.Property(e => e.Estado).HasColumnName("causestusu");
+
                 entity.Property(e => e.Usuario1)
                     .IsRequired()
                     .HasMaxLength(15)
@@ -538,6 +521,7 @@ namespace AppPruebaMVC.Data.Context
                     .HasConstraintName("FK_Usuario_Persona");
             });
 
+            OnModelCreatingGeneratedProcedures(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

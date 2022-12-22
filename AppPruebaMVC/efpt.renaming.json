@@ -37,12 +37,16 @@
                   "NewName": "Codigo"
                },
                {
-                  "Name": "faadcodpac",
-                  "NewName": "CodPaciente"
+                  "Name": "faadcodcit",
+                  "NewName": "CodCita"
                },
                {
                   "Name": "faadcodenf",
                   "NewName": "CodEnfermera"
+               },
+               {
+                  "Name": "caadfecadm",
+                  "NewName": "FechaAdmicion"
                }
             ],
             "Name": "aadmici",
@@ -85,8 +89,8 @@
                   "NewName": "CodDoctor"
                },
                {
-                  "Name": "facicodenf",
-                  "NewName": "CodEnfermera"
+                  "Name": "facicodpac",
+                  "NewName": "CodPaciente"
                }
             ],
             "Name": "acitmed",
@@ -155,6 +159,10 @@
                {
                   "Name": "paefcodenf",
                   "NewName": "Codigo"
+               },
+               {
+                  "Name": "caefestenf",
+                  "NewName": "Estado"
                }
             ],
             "Name": "aenfmed",
@@ -307,8 +315,16 @@
                   "NewName": "TiempoEnfermedad"
                },
                {
-                  "Name": "carstratam",
-                  "NewName": "Tratamiento"
+                  "Name": "parscodres",
+                  "NewName": "Codigo"
+               },
+               {
+                  "Name": "farscodcit",
+                  "NewName": "CodCita"
+               },
+               {
+                  "Name": "farscodtra",
+                  "NewName": "Codtratamiento"
                }
             ],
             "Name": "aresult",
@@ -326,25 +342,7 @@
                }
             ],
             "Name": "aroluse",
-            "NewName": "RolUsuario"
-         },
-         {
-            "Columns": [
-               {
-                  "Name": "patmcodtra",
-                  "NewName": "Codigo"
-               },
-               {
-                  "Name": "fatmcodcit",
-                  "NewName": "CodCita"
-               },
-               {
-                  "Name": "fatmcodrec",
-                  "NewName": "CodRecetaMedica"
-               }
-            ],
-            "Name": "atratam",
-            "NewName": "Tratamiento"
+            "NewName": "Roles"
          },
          {
             "Columns": [
@@ -367,6 +365,10 @@
                {
                   "Name": "fauscodper",
                   "NewName": "CodPersona"
+               },
+               {
+                  "Name": "causestusu",
+                  "NewName": "Estado"
                }
             ],
             "Name": "ausuari",
@@ -377,6 +379,14 @@
                {
                   "Name": "paurcoduro",
                   "NewName": "Codigo"
+               },
+               {
+                  "Name": "faurcodrou",
+                  "NewName": "CodRol"
+               },
+               {
+                  "Name": "faurcodusu",
+                  "NewName": "CodUsuario"
                }
             ],
             "Name": "ausurol",

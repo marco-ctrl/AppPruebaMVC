@@ -1,36 +1,91 @@
 ﻿@model AppPruebaMVC.Data.Models.Paciente
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
-<h1>Edit</h1>
+<div class="container">
+    <h4>Editar</h4>
 
-<h4>Paciente</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Alergia" class="control-label"></label>
-                <input asp-for="Alergia" class="form-control" />
-                <span asp-validation-for="Alergia" class="text-danger"></span>
+    <hr />
+    <div class="row">
+        <div class="col l8">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="red-text"></div>
+                <input type="hidden" asp-for="Codigo" id="txt_codPersona"/>
+                <div class="input-field">
+                <input type="text" id="autocomplete-input" class="autocomplete">
+                <label for="autocomplete-input" id="lbl_persona">Persona</label>
             </div>
-            <div class="form-group">
-                <label asp-for="PersonaEncargada" class="control-label"></label>
-                <input asp-for="PersonaEncargada" class="form-control" />
-                <span asp-validation-for="PersonaEncargada" class="text-danger"></span>
+                <div class="input-field">
+                    <label asp-for="Alergia">Alergia</label>
+                    <input asp-for="Alergia"/>
+                    <span asp-validation-for="Alergia" class="red-text"></span>
+                </div>
+                <div class="input-field">
+                    <label asp-for="PersonaEncargada">Persona Encargada</label>
+                    <input type="text" asp-for="PersonaEncargada" class="validate" />
+                    <span asp-validation-for="PersonaEncargada" class="red-text"></span>
+                </div>
+                <div class="right-align col l12">
+                <button type="submit" class="btn blue"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                <a asp-action="Index" class="btn red"><i class="fa-solid fa-ban"></i> Cancelar</a>
             </div>
-            <input type="hidden" asp-for="Codigo" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
+
+
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
 
+            $('#lbl_persona').addClass('active');
+
+            ListaPersonas();
+            var codPersona = $('#txt_codPersona').val();
+            console.log(codPersona);
+
+           function ListaPersonas() { 
+           console.log("Lista Personas");
+            $.ajax({
+                type: 'GET',
+                url: '/Home/BusquedaPersona?busqueda=%'
+            })
+                .done(function(responce) {
+                    console.log(responce);
+                    var listPersonas = {};
+                    responce.forEach(persona => {
+                        listPersonas[persona.label] = {
+                            id: persona.value,
+                            text: persona.label,
+                            img: null
+                        };
+                        if(listPersonas[persona.label].id == codPersona){
+                            $('#autocomplete-input').val(persona.label);
+                        }
+                    })
+
+                    $('input.autocomplete').autocomplete({
+                        data: listPersonas,
+                        limit: 3,
+                        onAutocomplete: function(data) {
+                            console.log(listPersonas[data].id);
+                            $('#txt_codPersona').val(listPersonas[data].id);
+                        }
+                    })
+                    console.log(listPersonas);
+                })
+                .fail(function() {
+                    var toastHTML = '<span>Error al dar de Baja Persona</span><button class="btn-flat toast-action">Undo</button>';
+                    console.error("error al listar persona");
+                });
+        }
+
+    
+});
+    </script>
+    
+}

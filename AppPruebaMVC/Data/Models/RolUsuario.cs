@@ -7,14 +7,11 @@ namespace AppPruebaMVC.Data.Models
 {
     public partial class RolUsuario
     {
-        public RolUsuario()
-        {
-            RolUsuario1s = new HashSet<RolUsuario1>();
-        }
-
-        public string Rol { get; set; }
         public int Codigo { get; set; }
+        public int CodRol { get; set; }
+        public int CodUsuario { get; set; }
 
-        public virtual ICollection<RolUsuario1> RolUsuario1s { get; set; }
+        public virtual Role CodRolNavigation { get; set; }
+        public virtual Usuario CodUsuarioNavigation { get; set; }
     }
 }

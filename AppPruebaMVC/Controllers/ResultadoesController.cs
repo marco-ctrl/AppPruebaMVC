@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,12 +18,12 @@ namespace AppPruebaMVC.Controllers
         // GET: Resultadoes
         public async Task<IActionResult> Index()
         {
-            var consultoriobdContext = _context.Resultados.Include(r => r.FarscodresNavigation);
+            var consultoriobdContext = _context.Resultados.Include(r => r.CodCitaNavigation).Include(r => r.CodtratamientoNavigation);
             return View(await consultoriobdContext.ToListAsync());
         }
 
         // GET: Resultadoes/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Resultados == null)
             {
@@ -35,8 +31,9 @@ namespace AppPruebaMVC.Controllers
             }
 
             var resultado = await _context.Resultados
-                .Include(r => r.FarscodresNavigation)
-                .FirstOrDefaultAsync(m => m.Parscodres == id);
+                .Include(r => r.CodCitaNavigation)
+                .Include(r => r.CodtratamientoNavigation)
+                .FirstOrDefaultAsync(m => m.Codigo == id);
             if (resultado == null)
             {
                 return NotFound();
@@ -48,7 +45,8 @@ namespace AppPruebaMVC.Controllers
         // GET: Resultadoes/Create
         public IActionResult Create()
         {
-            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo");
+            ViewData["CodCita"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo");
+            ViewData["CodTratamiento"] = new SelectList(_context.RecetaMedicas, "Codigo", "Codigo");
             return View();
         }
 
@@ -65,12 +63,13 @@ namespace AppPruebaMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.Farscodres);
+            ViewData["CodCita"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.CodCitaNavigation);
+            ViewData["CodTratamiento"] = new SelectList(_context.RecetaMedicas, "Codigo", "Codigo", resultado.CodtratamientoNavigation);
             return View(resultado);
         }
 
         // GET: Resultadoes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Resultados == null)
             {
@@ -82,7 +81,7 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.Farscodres);
+            ViewData["CodCita"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.CodCita);
             return View(resultado);
         }
 
@@ -93,7 +92,7 @@ namespace AppPruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Antecedentes,Estado,FechaResultado,MotivoConsulta,ProximaCita,TiempoEnfermedad,Tratamiento,Parscodres,Farscodres")] Resultado resultado)
         {
-            if (id != resultado.Parscodres)
+            if (id != resultado.Codigo)
             {
                 return NotFound();
             }
@@ -107,7 +106,7 @@ namespace AppPruebaMVC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ResultadoExists(resultado.Parscodres))
+                    if (!ResultadoExists(resultado.Codigo))
                     {
                         return NotFound();
                     }
@@ -118,12 +117,12 @@ namespace AppPruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Farscodres"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.Farscodres);
+            ViewData["CodCita"] = new SelectList(_context.CitaMedicas, "Codigo", "Codigo", resultado.CodCita);
             return View(resultado);
         }
 
         // GET: Resultadoes/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Resultados == null)
             {
@@ -131,8 +130,9 @@ namespace AppPruebaMVC.Controllers
             }
 
             var resultado = await _context.Resultados
-                .Include(r => r.FarscodresNavigation)
-                .FirstOrDefaultAsync(m => m.Parscodres == id);
+                .Include(r => r.CodCitaNavigation)
+                .Include(r => r.CodtratamientoNavigation)
+                .FirstOrDefaultAsync(m => m.Codigo == id);
             if (resultado == null)
             {
                 return NotFound();
@@ -144,7 +144,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Resultadoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.Resultados == null)
             {
@@ -155,14 +155,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Resultados.Remove(resultado);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ResultadoExists(int id)
+        private bool ResultadoExists(int? id)
         {
-          return _context.Resultados.Any(e => e.Parscodres == id);
+            return _context.Resultados.Any(e => e.Codigo == id);
         }
     }
 }

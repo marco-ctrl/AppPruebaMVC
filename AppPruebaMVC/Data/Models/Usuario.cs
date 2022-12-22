@@ -10,7 +10,7 @@ namespace AppPruebaMVC.Data.Models
         public Usuario()
         {
             CitaMedicas = new HashSet<CitaMedica>();
-            RolUsuario1s = new HashSet<RolUsuario1>();
+            RolUsuarios = new HashSet<RolUsuario>();
         }
 
         public string Contrasena { get; set; }
@@ -18,9 +18,10 @@ namespace AppPruebaMVC.Data.Models
         public string Usuario1 { get; set; }
         public int Codigo { get; set; }
         public int CodPersona { get; set; }
+        public bool Estado { get; set; }
 
         public virtual Persona CodPersonaNavigation { get; set; }
         public virtual ICollection<CitaMedica> CitaMedicas { get; set; }
-        public virtual ICollection<RolUsuario1> RolUsuario1s { get; set; }
+        public virtual ICollection<RolUsuario> RolUsuarios { get; set; }
     }
 }

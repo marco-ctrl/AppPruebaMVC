@@ -11,12 +11,26 @@
       ]
     },
     {
-      "library": "material-design-icons@4.0.0",
-      "destination": "wwwroot/lib/material-design-icons/"
-    },
-    {
       "library": "font-awesome@6.1.2",
       "destination": "wwwroot/font-awesome/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatable@2.0.2",
+      "destination": "wwwroot/lib/datatable/",
+      "files": [
+        "js/datatable.min.js",
+        "img/sort_asc.png",
+        "img/sort_both.png",
+        "img/sort_desc.png",
+        "css/datatable.min.css"
+      ]
     }
-  ]
+  ,
+{
+  "provider": "cdnjs",
+  "library": "datatables@1.10.21",
+  "destination": "wwwroot/lib/datatables/"
+}
+]
 }

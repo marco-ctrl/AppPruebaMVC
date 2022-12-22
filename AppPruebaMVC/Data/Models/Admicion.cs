@@ -15,10 +15,11 @@ namespace AppPruebaMVC.Data.Models
         public double Saturacion { get; set; }
         public double Temperatura { get; set; }
         public int Codigo { get; set; }
-        public int CodPaciente { get; set; }
+        public int CodCita { get; set; }
         public int CodEnfermera { get; set; }
+        public DateTime? FechaAdmicion { get; set; }
 
+        public virtual CitaMedica CodCitaNavigation { get; set; }
         public virtual Enfermera CodEnfermeraNavigation { get; set; }
-        public virtual Paciente CodPacienteNavigation { get; set; }
     }
 }

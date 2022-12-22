@@ -2,7 +2,7 @@
     $('input.autocomplete').autocomplete({
         data: function (request, response) {
             $.ajax({
-                url: "@Url.Action("BusquedaPersona","Home")?busqueda" + request.term,
+                url: "@Url.Action("BusquedaPersona","Home")?busqueda=" + request.term,
                 dataType: "json",
                 success: function (resp) {
                     response(resp)

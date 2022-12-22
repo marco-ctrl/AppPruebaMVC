@@ -18,11 +18,12 @@ namespace AppPruebaMVC.Data.Models
         public string MotivoConsulta { get; set; }
         public DateTime ProximaCita { get; set; }
         public string TiempoEnfermedad { get; set; }
-        public string Tratamiento { get; set; }
-        public int Parscodres { get; set; }
-        public int Farscodres { get; set; }
+        public int Codigo { get; set; }
+        public int CodCita { get; set; }
+        public int? Codtratamiento { get; set; }
 
-        public virtual CitaMedica FarscodresNavigation { get; set; }
+        public virtual CitaMedica CodCitaNavigation { get; set; }
+        public virtual RecetaMedica CodtratamientoNavigation { get; set; }
         public virtual ICollection<Diagnostico> Diagnosticos { get; set; }
     }
 }

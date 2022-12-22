@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<AppPruebaMVC.Data.Models.Persona>
 
 @{
-    ViewData["Title"] = "Persona";
+    ViewData["Title"] = "Personas";
 }
 
-<h1>Personas</h1>
+<link rel="stylesheet" href="~/css/materialTable.css" asp-append-version="true" />
 
 <p>
     <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue tooltipped" data-position="bottom" data-tooltip="Agregar Persona"><i class="fa-solid fa-plus fa-3x"></i></a>
 </p>
-<table class="responsive-table striped">
+<table class="responsive-table striped" id="myTable">
     <thead>
         <tr>
              <th>
@@ -80,22 +80,23 @@
             </td>
             @if (item.Estado)
             {
-                <td class="green-text">
+                <td class="green-text" id="@item.Codigo">
                    Activo    
                 </td>
                 <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
-                <a class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Persona" onclick="Eliminar('Persona', '@item.Nombre', '@item.Codigo', '@item.ApellidoPaterno', '@item.ApellidoMaterno')"><i class="fa-solid fa-trash"></i></a>
+                <a id="edit_@item.Codigo" asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a id="baja_@item.Codigo" onclick="DarBaja('Persona', '@item.Nombre', '@item.Codigo', '@item.ApellidoPaterno', '@item.ApellidoMaterno')" class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Person"><i class="fa-solid fa-trash"></i></a>
+                
             </td>
             }
             else
             {
-                 <td class="red-text">
-                   Inactivo
+                 <td class="red-text" id="@item.Codigo">
+                   inActivo
                 </td>
                 <td>
-                <a disabled asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
-                <a disabled class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Persona" onclick="Eliminar('Persona', '@item.Nombre', '@item.Codigo', '@item.ApellidoPaterno', '@item.ApellidoMaterno')"><i class="fa-solid fa-trash"></i></a>
+                <a disabled class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a disabled class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Persona"><i class="fa-solid fa-trash"></i></a>
             </td>
             }
             
@@ -113,44 +114,65 @@
     <div id="BajaBody"></div>
     <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-      <a id="cmdEliminar" href="#!" class="modal-close waves-effect waves-green btn red">Eliminar</a>
+      <a id="cmdEliminar" href="#!" class="modal-close waves-effect waves-green btn red">Dar Baja</a>
     </div>
   </div>
 
     @section Scripts{
     <script>
-        let idEliminar;
-        
-        document.getElementById('cmdEliminar').addEventListener('click', () => {
-            
-            ConfirmarEliminar();
-        });
-        var Eliminar = function(entity, element, id, element1, element2) {
+        var DarBaja = function(entity, element, id, element1, element2) {
+            console.log("hola");
+            let uri = `Personas/Baja/${id}`;
             event.stopPropagation();
-            document.getElementById('modalTitle').innerHTML = `Eliminar ${entity}`;
-            document.getElementById('modalMensaje').innerHTML = `¿Seguro desea Elimina esta Persona? ${element} ${element1} ${element2}`;
-            idEliminar = id;
-            let elems = document.getElementById('modalEliminar');
-            let instances = M.Modal.init(elems, { dismissible: false });
-            instances.open()
+            document.getElementById('modalTitle').innerHTML = `Dar Baja ${entity}`;
+            document.getElementById('modalMensaje').innerHTML = `¿Seguro desea dar de Baja esta Persona? ${element} ${element1} ${element2}`;
+            
+            $("#BajaBody").load(uri, function(){
+                $("#modalEliminar").modal('open');
+                M.updateTextFields();
+            });
+            
         }
-       var ConfirmarEliminar = function() {
-           console.log("eliminando" + idEliminar);
+
+        var ConfirmarBaja = function() {
+           console.log("Dando de baja" + idEliminar);
+            var formValues = $('#formBajaPersona').serialize();
+            id = "";
             $.ajax({
                 type: 'POST',
-                url: 'Personas/Delete',
-                data: { id: idEliminar }
+                url: 'Personas/DarBaja',
+                data: formValues
             })
                 .done(function(data) {
                     console.log(data.codigo);
-                    document.getElementById(`${data.codigo}`).remove();
-                    var toastHTML = '<span>Persona dada baja Correctamente</span><button class="btn-flat toast-action"><i class="material-icons green-text">check</i></button>';
+                    var toastHTML = '<span>Persona dada baja Correctamente</span><button class="btn-flat toast-action"><i class="fa-solid fa-check"></i></button>';
                     M.toast({html: toastHTML});
+                    document.getElementById(`${data.codigo}`).innerHTML='inActivo';
+                    document.getElementById(`${data.codigo}`).classList.replace('green-text', 'red-text');
+                    $(`#baja_${data.codigo}`).attr('disabled', true);
+                    $(`#edit_${data.codigo}`).attr('disabled', true);
                 })
                 .fail(function() {
                     var toastHTML = '<span>Error al dar de Baja Persona</span><button class="btn-flat toast-action">Undo</button>';
                     M.toast({html: toastHTML});
                 });
         }
+        
+            
+        let idEliminar;
+        
+        document.getElementById('cmdEliminar').addEventListener('click', () => {
+            
+            ConfirmarBaja();
+        });
+      $(document).ready( function () {
+
+          var myTable = $('#myTable').DataTable({
+              language: { url: '/lib/es-ES.json' }
+          });
+
+      } );
+
+        
     </script>
 }

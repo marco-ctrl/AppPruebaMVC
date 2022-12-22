@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<AppPruebaMVC.Data.Models.Enfermedad>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Enfermedades";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/materialTable.css" asp-append-version="true" />
 
-<p>
-    <a asp-action="Create">Create New</a>
+<div class="container">
+    <p>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue tooltipped" data-position="bottom" data-tooltip="Agregar Enfermedad"><i class="fa-solid fa-plus fa-3x"></i></a>
 </p>
-<table class="table">
+<table class="responsive-table striped" id="myTable">
     <thead>
         <tr>
             <th>
@@ -18,7 +19,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
-            <th></th>
+            <th>
+                Estado
+            </th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -30,12 +34,112 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+            @if (item.Estado)
+            {
+                <td class="green-text" id="@item.Codigo">
+                   Activo    
+                </td>
+                <td>
+                    <a id="edit_@item.Codigo" asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Enfermedad"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a id="baja_@item.Codigo" onclick="DarBajaEnfermedad('Enfermedad', '@item.Nombre', '@item.Codigo')" class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Enfermedad">
+                        <i class="fa-solid fa-trash"></i>
+                        @* 
+                        *@
+                        
+                    </a>
+                
+                </td>
+            }
+            else
+            {
+                 <td class="red-text" id="@item.Codigo">
+                   inActivo
+                </td>
+                <td>
+                <a disabled class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a disabled class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Persona"><i class="fa-solid fa-trash"></i></a>
             </td>
+            }
         </tr>
 }
     </tbody>
 </table>
+
+</div>
+
+<div id="modalEliminarEnfermedad" class="modal">
+    <div class="modal-content">
+      <h4 id="modalTitle">Modal Header</h4>
+      <p id="modalMensaje">A bunch of text</p>
+    </div>
+    <div id="BajaBody"></div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a id="cmdEliminar" href="#!" class="modal-close waves-effect waves-green btn red">Dar Baja</a>
+    </div>
+  </div>
+
+ @section Scripts{
+    <script>
+       
+            HolaMundo()
+
+            function HolaMundo() {
+                console.log("hola mundo");
+            }
+
+            
+            let idEliminar;
+        
+            document.getElementById('cmdEliminar').addEventListener('click', () => {
+            
+                ConfirmarBaja();
+            });
+        
+            var DarBajaEnfermedad = function(entity, element, id, element1, element2) {
+                console.log("hola");
+                let uri = `Enfermedads/Baja/${id}`;
+                event.stopPropagation();
+                document.getElementById('modalTitle').innerHTML = `Dar Baja ${entity}`;
+                document.getElementById('modalMensaje').innerHTML = `¿Seguro desea dar de Baja esta Persona? ${element} ${element1} ${element2}`;
+            
+                $("#BajaBody").load(uri, function(){
+                    $("#modalEliminarEnfermedad").modal('open');
+                    M.updateTextFields();
+                });
+            
+             }
+
+            var ConfirmarBaja = function() {
+                console.log("Dando de baja" + idEliminar);
+                var formValues = $('#formBajaEnfermedad').serialize();
+                id = "";
+                $.ajax({
+                    type: 'POST',
+                    url: 'Enfermedads/DarBaja',
+                    data: formValues
+                })
+                .done(function(data) {
+                    console.log(data.codigo);
+                    var toastHTML = '<span>Enfermedad dado baja Correctamente</span><button class="btn-flat toast-action"><i class="fa-solid fa-check"></i></button>';
+                    M.toast({html: toastHTML});
+                    document.getElementById(`${data.codigo}`).innerHTML='inActivo';
+                    document.getElementById(`${data.codigo}`).classList.replace('green-text', 'red-text');
+                    $(`#baja_${data.codigo}`).attr('disabled', true);
+                    $(`#edit_${data.codigo}`).attr('disabled', true);
+                })
+                .fail(function() {
+                    var toastHTML = '<span>Error al dar de Baja Enfermedad</span><button class="btn-flat toast-action"><i class="fa-solid fa-xmark"></i></button>';
+                    M.toast({html: toastHTML});
+                });
+            }
+
+        //});
+
+         $(document).ready(function() {
+            var myTable = $('#myTable').DataTable({
+                language: { url: '/lib/es-ES.json' }
+            })
+        });
+    </script>
+}

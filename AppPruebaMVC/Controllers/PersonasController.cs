@@ -2,7 +2,6 @@
 using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static AppPruebaMVC.Data.Models.Persona;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -18,16 +17,16 @@ namespace AppPruebaMVC.Controllers
         // GET: Personas
         public async Task<IActionResult> Index()
         {
-            
 
+            var _persona = await _context.Personas.OrderByDescending(c => c.Codigo).ToListAsync();
 
             return _context.Personas != null ?
-            View(await _context.Personas.ToListAsync()) :
+            View(_persona) :
             Problem("Entity set 'consultoriobdContext.Personas'  is null.");
         }
 
         // GET: Personas/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Personas == null)
             {
@@ -65,6 +64,11 @@ namespace AppPruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ApellidoMaterno,ApellidoPaterno,NumeroCelular,Cedula,Direccion,FechaNacimiento,Estado,EstadoCivil,Nombre,NumeroTelefono,Sexo")] Persona persona)
         {
+            persona.Nombre = persona.Nombre.ToUpper();
+            persona.ApellidoPaterno = persona.ApellidoPaterno.ToUpper();
+            persona.ApellidoMaterno = persona.ApellidoMaterno.ToUpper();
+            persona.Direccion = persona.Direccion.ToUpper();
+
             if (ModelState.IsValid)
             {
                 _context.Add(persona);
@@ -75,7 +79,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Personas/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Personas == null)
             {
@@ -106,6 +110,11 @@ namespace AppPruebaMVC.Controllers
             {
                 try
                 {
+                    persona.Nombre = persona.Nombre.ToUpper();
+                    persona.ApellidoPaterno = persona.ApellidoPaterno.ToUpper();
+                    persona.ApellidoMaterno = persona.ApellidoMaterno.ToUpper();
+                    persona.Direccion = persona.Direccion.ToUpper();
+
                     _context.Update(persona);
                     await _context.SaveChangesAsync();
                 }
@@ -125,8 +134,8 @@ namespace AppPruebaMVC.Controllers
             return View(persona);
         }
 
-        // GET: Personas/Edit/5
-        public async Task<IActionResult> Baja(int id)
+        // GET: Personas/Baja/5
+        public async Task<IActionResult> Baja(int? id)
         {
             if (id == null || _context.Personas == null)
             {
@@ -138,7 +147,38 @@ namespace AppPruebaMVC.Controllers
             {
                 return NotFound();
             }
-            return View(persona);
+            return PartialView("Baja", persona);
+        }
+
+        [HttpPost, ActionName("DarBaja")]
+        public async Task<IActionResult> ConfirmarBaja([Bind("ApellidoMaterno,ApellidoPaterno,NumeroCelular,Cedula,Direccion,FechaNacimiento,Estado,EstadoCivil,Nombre,NumeroTelefono,Sexo,Codigo")] Persona persona)
+        {
+            /*if (id != persona.Codigo)
+            {
+                return NotFound();
+            }*/
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(persona);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PersonaExists(persona.Codigo))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                //return RedirectToAction(nameof(Index));
+            }
+            return Json(persona);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -160,7 +200,7 @@ namespace AppPruebaMVC.Controllers
             //return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonaExists(int id)
+        private bool PersonaExists(int? id)
         {
             return (_context.Personas?.Any(e => e.Codigo == id)).GetValueOrDefault();
         }

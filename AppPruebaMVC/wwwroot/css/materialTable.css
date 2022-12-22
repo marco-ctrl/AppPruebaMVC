@@ -1,0 +1,18 @@
+﻿.dataTables_wrapper .dataTables_length label select {
+    display: inline-block;
+    margin: 0 8px;
+    width: 70px;
+}
+
+.dataTables_filter{
+    padding-right: 50px;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    padding-top: 0.80em;
+    padding-bottom: 0.80em;
+}
+
+label {
+    font-size: 1.1em;
+}

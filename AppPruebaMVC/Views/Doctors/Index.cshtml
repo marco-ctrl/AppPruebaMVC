@@ -1,24 +1,28 @@
 ﻿@model IEnumerable<AppPruebaMVC.Data.Models.Doctor>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Doctores";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/materialTable.css" asp-append-version="true" />
 
-<p>
-    <a asp-action="Create">Create New</a>
+<div class="container">
+    <p>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue tooltipped" data-position="bottom" data-tooltip="Agregar Doctor"><i class="fa-solid fa-plus fa-3x"></i></a>
 </p>
-<table class="table">
+<table class="responsive-table striped" id="myTable">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Especialidad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodigoNavigation)
+                Nombre Completo
             </th>
-            <th></th>
+            <th>
+                Estado
+            </th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -28,14 +32,42 @@
                 @Html.DisplayFor(modelItem => item.Especialidad)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoNavigation.Codigo)
+                @Html.DisplayFor(modelItem => item.CodigoNavigation.Nombre)
+                @Html.DisplayFor(modelItem => item.CodigoNavigation.ApellidoPaterno)
+                @Html.DisplayFor(modelItem => item.CodigoNavigation.ApellidoMaterno)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
-            </td>
+            @if (item.CodigoNavigation.Estado)
+                    {
+                        <td class="green-text" id="@item.Codigo">
+                          Activo    
+                        </td>
+                        <td>
+                          <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Doctor"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="red-text" id="@item.Codigo">
+                          inActivo    
+                        </td>
+                        <td>
+                          <a disabled class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Doctor"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </td>
+                    }
+                    
         </tr>
 }
     </tbody>
 </table>
+
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            var myTable = $('#myTable').DataTable({
+                language: { url: '/lib/es-ES.json' }
+            })
+        });
+    </script>
+}

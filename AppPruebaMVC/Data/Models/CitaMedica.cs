@@ -9,8 +9,8 @@ namespace AppPruebaMVC.Data.Models
     {
         public CitaMedica()
         {
+            Admicions = new HashSet<Admicion>();
             Resultados = new HashSet<Resultado>();
-            Tratamientos = new HashSet<Tratamiento>();
         }
 
         public bool Estado { get; set; }
@@ -18,12 +18,12 @@ namespace AppPruebaMVC.Data.Models
         public int Codigo { get; set; }
         public int CodUsuario { get; set; }
         public int CodDoctor { get; set; }
-        public int CodEnfermera { get; set; }
+        public int CodPaciente { get; set; }
 
         public virtual Doctor CodDoctorNavigation { get; set; }
-        public virtual Enfermera CodEnfermeraNavigation { get; set; }
+        public virtual Paciente CodPacienteNavigation { get; set; }
         public virtual Usuario CodUsuarioNavigation { get; set; }
+        public virtual ICollection<Admicion> Admicions { get; set; }
         public virtual ICollection<Resultado> Resultados { get; set; }
-        public virtual ICollection<Tratamiento> Tratamientos { get; set; }
     }
 }

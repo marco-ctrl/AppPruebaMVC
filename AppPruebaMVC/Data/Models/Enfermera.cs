@@ -10,7 +10,6 @@ namespace AppPruebaMVC.Data.Models
         public Enfermera()
         {
             Admicions = new HashSet<Admicion>();
-            CitaMedicas = new HashSet<CitaMedica>();
         }
 
         public string Especialidad { get; set; }
@@ -18,6 +17,5 @@ namespace AppPruebaMVC.Data.Models
 
         public virtual Persona CodigoNavigation { get; set; }
         public virtual ICollection<Admicion> Admicions { get; set; }
-        public virtual ICollection<CitaMedica> CitaMedicas { get; set; }
     }
 }

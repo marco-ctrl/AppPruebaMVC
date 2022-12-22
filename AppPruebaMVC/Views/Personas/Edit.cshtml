@@ -1,11 +1,10 @@
 ﻿@model AppPruebaMVC.Data.Models.Persona
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Persona";
 }
 
 <div class="container">
-    <h1>Persona</h1>
 
 <h4>Editar</h4>
 
@@ -14,7 +13,7 @@
         <hr/>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="red-text"></div>
-            <input asp-for="Codigo" type="hidden"/>
+            <input type="hidden" asp-for="Codigo" />
             <div class="input-field col l6">
                 <label asp-for="Cedula">Num. Cedula</label>
                 <input asp-for="Cedula" class="validate" />
@@ -37,7 +36,7 @@
             </div>
             <div class="input-field col l6">
                 <label asp-for="FechaNacimiento">Fecha de Nacimiento</label>
-                <input type="text" asp-for="FechaNacimiento" class="validate datepicker" />
+                <input type="text" asp-for="FechaNacimiento" class="validate datepicker" onkeydown="return ValidarEscrituraFecha()"/>
                 <span asp-validation-for="FechaNacimiento" class="red-text"></span>
             </div>
             <div class="input-field col l6">
@@ -81,9 +80,9 @@
             
                 <input asp-for="Estado" type="hidden" value="true"/>
             <br />
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn blue" />
-                <a asp-action="Index" class="btn red">Cancelar</a>
+            <div class="right-align col l12">
+                <button type="submit" class="btn blue"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                <a asp-action="Index" class="btn red"><i class="fa-solid fa-ban"></i> Cancelar</a>
             </div>
         </form>
     </div>
@@ -96,7 +95,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(document).ready(function(){
+            var actualYear = (new Date()).getFullYear();
             $('.datepicker').datepicker({
+                defaultDate: new Date(actualYear-18,1,31),
                 format: 'dd/mm/yyyy',
                 i18n: {
                     months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
@@ -105,8 +106,16 @@
                     weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab'],
                     weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
                 },
-                autoClose: true
+                maxDate: new Date(actualYear-18,12,31),
+                yearRange: [1928, actualYear-18],
+                autoClose: true,
+                cancel: 'Cancelar',
+                clear: 'Limpiar',
+                done: 'ok'
             });
         });
+
+        
+
     </script>
 }

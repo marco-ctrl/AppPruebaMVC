@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
+﻿using AppPruebaMVC.Data.Context;
 using AppPruebaMVC.Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,11 +17,11 @@ namespace AppPruebaMVC.Controllers
         // GET: Enfermedads
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Enfermedads.ToListAsync());
+            return View(await _context.Enfermedads.ToListAsync());
         }
 
         // GET: Enfermedads/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Enfermedads == null)
             {
@@ -58,6 +53,9 @@ namespace AppPruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                enfermedad.Estado = true;
+                enfermedad.Nombre = enfermedad.Nombre.ToUpper();
+                enfermedad.Descripcion = enfermedad.Descripcion.ToUpper();
                 _context.Add(enfermedad);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +64,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Enfermedads/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Enfermedads == null)
             {
@@ -97,6 +95,9 @@ namespace AppPruebaMVC.Controllers
             {
                 try
                 {
+                    enfermedad.Estado = true;
+                    enfermedad.Nombre = enfermedad.Nombre.ToUpper();
+                    enfermedad.Descripcion = enfermedad.Descripcion.ToUpper();
                     _context.Update(enfermedad);
                     await _context.SaveChangesAsync();
                 }
@@ -117,7 +118,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Enfermedads/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Enfermedads == null)
             {
@@ -137,7 +138,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Enfermedads/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.Enfermedads == null)
             {
@@ -148,14 +149,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Enfermedads.Remove(enfermedad);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnfermedadExists(int id)
+        private bool EnfermedadExists(int? id)
         {
-          return _context.Enfermedads.Any(e => e.Codigo == id);
+            return _context.Enfermedads.Any(e => e.Codigo == id);
         }
     }
 }

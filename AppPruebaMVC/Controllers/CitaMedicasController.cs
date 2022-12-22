@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,12 +18,12 @@ namespace AppPruebaMVC.Controllers
         // GET: CitaMedicas
         public async Task<IActionResult> Index()
         {
-            var consultoriobdContext = _context.CitaMedicas.Include(c => c.CodDoctorNavigation).Include(c => c.CodEnfermeraNavigation).Include(c => c.CodUsuarioNavigation);
+            var consultoriobdContext = _context.CitaMedicas.Include(c => c.CodDoctorNavigation.CodigoNavigation).Include(c => c.CodPacienteNavigation.CodigoNavigation).Include(c => c.CodUsuarioNavigation);
             return View(await consultoriobdContext.ToListAsync());
         }
 
         // GET: CitaMedicas/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.CitaMedicas == null)
             {
@@ -35,9 +31,9 @@ namespace AppPruebaMVC.Controllers
             }
 
             var citaMedica = await _context.CitaMedicas
-                .Include(c => c.CodDoctorNavigation)
-                .Include(c => c.CodEnfermeraNavigation)
+                .Include(c => c.CodDoctorNavigation.Codigo)
                 .Include(c => c.CodUsuarioNavigation)
+                .Include(c => c.CodPacienteNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (citaMedica == null)
             {
@@ -51,7 +47,7 @@ namespace AppPruebaMVC.Controllers
         public IActionResult Create()
         {
             ViewData["CodDoctor"] = new SelectList(_context.Doctors, "Codigo", "Codigo");
-            ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo");
+            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo");
             ViewData["CodUsuario"] = new SelectList(_context.Usuarios, "Codigo", "Codigo");
             return View();
         }
@@ -61,22 +57,23 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Estado,FechaHora,Codigo,CodUsuario,CodDoctor,CodEnfermera")] CitaMedica citaMedica)
+        public async Task<IActionResult> Create([Bind("Estado,FechaHora,Codigo,CodUsuario,CodDoctor,CodPaciente")] CitaMedica citaMedica)
         {
             if (ModelState.IsValid)
             {
+                citaMedica.Estado = true;
                 _context.Add(citaMedica);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CodDoctor"] = new SelectList(_context.Doctors, "Codigo", "Codigo", citaMedica.CodDoctor);
-            ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo", citaMedica.CodEnfermera);
+            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", citaMedica.CodPaciente);
             ViewData["CodUsuario"] = new SelectList(_context.Usuarios, "Codigo", "Codigo", citaMedica.CodUsuario);
             return View(citaMedica);
         }
 
         // GET: CitaMedicas/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.CitaMedicas == null)
             {
@@ -89,7 +86,7 @@ namespace AppPruebaMVC.Controllers
                 return NotFound();
             }
             ViewData["CodDoctor"] = new SelectList(_context.Doctors, "Codigo", "Codigo", citaMedica.CodDoctor);
-            ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo", citaMedica.CodEnfermera);
+            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", citaMedica.CodPaciente);
             ViewData["CodUsuario"] = new SelectList(_context.Usuarios, "Codigo", "Codigo", citaMedica.CodUsuario);
             return View(citaMedica);
         }
@@ -99,7 +96,7 @@ namespace AppPruebaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Estado,FechaHora,Codigo,CodUsuario,CodDoctor,CodEnfermera")] CitaMedica citaMedica)
+        public async Task<IActionResult> Edit(int id, [Bind("Estado,FechaHora,Codigo,CodUsuario,CodDoctor,CodPaciente")] CitaMedica citaMedica)
         {
             if (id != citaMedica.Codigo)
             {
@@ -110,6 +107,7 @@ namespace AppPruebaMVC.Controllers
             {
                 try
                 {
+                    citaMedica.Estado = true;
                     _context.Update(citaMedica);
                     await _context.SaveChangesAsync();
                 }
@@ -127,13 +125,13 @@ namespace AppPruebaMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CodDoctor"] = new SelectList(_context.Doctors, "Codigo", "Codigo", citaMedica.CodDoctor);
-            ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo", citaMedica.CodEnfermera);
+            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", citaMedica.CodPaciente);
             ViewData["CodUsuario"] = new SelectList(_context.Usuarios, "Codigo", "Codigo", citaMedica.CodUsuario);
             return View(citaMedica);
         }
 
         // GET: CitaMedicas/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.CitaMedicas == null)
             {
@@ -142,7 +140,7 @@ namespace AppPruebaMVC.Controllers
 
             var citaMedica = await _context.CitaMedicas
                 .Include(c => c.CodDoctorNavigation)
-                .Include(c => c.CodEnfermeraNavigation)
+                .Include(c => c.CodPacienteNavigation)
                 .Include(c => c.CodUsuarioNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (citaMedica == null)
@@ -156,7 +154,7 @@ namespace AppPruebaMVC.Controllers
         // POST: CitaMedicas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.CitaMedicas == null)
             {
@@ -167,14 +165,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.CitaMedicas.Remove(citaMedica);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CitaMedicaExists(int id)
+        private bool CitaMedicaExists(int? id)
         {
-          return _context.CitaMedicas.Any(e => e.Codigo == id);
+            return _context.CitaMedicas.Any(e => e.Codigo == id);
         }
     }
 }

@@ -1,16 +1,17 @@
 ﻿@model IEnumerable<AppPruebaMVC.Data.Models.Usuario>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Usuarios";
 }
+<link rel="stylesheet" href="~/css/materialTable.css" asp-append-version="true" />
+
 
 <div class="container">
-    <h1>Usuarios</h1>
 
 <p>
     <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue tooltipped" data-position="bottom" data-tooltip="Agregar Usuario"><i class="fa-solid fa-plus fa-3x"></i></a>
 </p>
-<table class="responsive-table striped">
+<table class="responsive-table striped" id="myTable">
     <thead>
         <tr>
             <th>
@@ -21,6 +22,9 @@
             </th>
             <th>
                 Nombre
+            </th>
+            <th>
+                Estado
             </th>
             <th>Acciones</th>
         </tr>
@@ -37,11 +41,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CodPersonaNavigation.Nombre) @Html.DisplayFor(modelItem => item.CodPersonaNavigation.ApellidoPaterno) @Html.DisplayFor(modelItem => item.CodPersonaNavigation.ApellidoMaterno)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Usuario"><i class="fa-solid fa-pen-to-square"></i></a>
-                @*<!--<a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |-->*@
-                <a asp-action="Delete" asp-route-id="@item.Codigo" class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Usuario"><i class="fa-solid fa-trash"></i></a>
+            @if (item.Estado)
+            {
+                <td class="green-text" id="@item.Codigo">
+                   Activo    
+                </td>
+                <td>
+                    <a id="edit_@item.Codigo" asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Usuario"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a id="baja_@item.Codigo" onclick="DarBajaUsuario('Usuario', '@item.CodPersonaNavigation.Nombre', '@item.Codigo', '@item.CodPersonaNavigation.ApellidoPaterno', '@item.CodPersonaNavigation.ApellidoMaterno')" class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Usuario">
+                        <i class="fa-solid fa-trash"></i>
+                        @* 
+                        *@
+                        
+                    </a>
+                
+                </td>
+            }
+            else
+            {
+                 <td class="red-text" id="@item.Codigo">
+                   inActivo
+                </td>
+                <td>
+                <a disabled class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Persona"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a disabled class="btn red tooltipped" data-position="bottom" data-tooltip="Dar de Baja Persona"><i class="fa-solid fa-trash"></i></a>
             </td>
+            }
         </tr>
 }
     </tbody>
@@ -49,3 +74,79 @@
 
 </div>
 
+<div id="modalEliminarUsuario" class="modal">
+    <div class="modal-content">
+      <h4 id="modalTitle">Modal Header</h4>
+      <p id="modalMensaje">A bunch of text</p>
+    </div>
+    <div id="BajaBody"></div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+      <a id="cmdEliminar" href="#!" class="modal-close waves-effect waves-green btn red">Dar Baja</a>
+    </div>
+  </div>
+
+ @section Scripts{
+    <script>
+       
+            HolaMundo()
+
+            function HolaMundo() {
+                console.log("hola mundo");
+            }
+
+            
+            let idEliminar;
+        
+            document.getElementById('cmdEliminar').addEventListener('click', () => {
+            
+                ConfirmarBaja();
+            });
+        
+            var DarBajaUsuario = function(entity, element, id, element1, element2) {
+                console.log("hola");
+                let uri = `Usuarios/Baja/${id}`;
+                event.stopPropagation();
+                document.getElementById('modalTitle').innerHTML = `Dar Baja ${entity}`;
+                document.getElementById('modalMensaje').innerHTML = `¿Seguro desea dar de Baja esta Persona? ${element} ${element1} ${element2}`;
+            
+                $("#BajaBody").load(uri, function(){
+                    $("#modalEliminarUsuario").modal('open');
+                    M.updateTextFields();
+                });
+            
+             }
+
+            var ConfirmarBaja = function() {
+                console.log("Dando de baja" + idEliminar);
+                var formValues = $('#formBajaUsuario').serialize();
+                id = "";
+                $.ajax({
+                    type: 'POST',
+                    url: 'Usuarios/DarBaja',
+                    data: formValues
+                })
+                .done(function(data) {
+                    console.log(data.codigo);
+                    var toastHTML = '<span>Usuario dado baja Correctamente</span><button class="btn-flat toast-action"><i class="fa-solid fa-check"></i></button>';
+                    M.toast({html: toastHTML});
+                    document.getElementById(`${data.codigo}`).innerHTML='inActivo';
+                    document.getElementById(`${data.codigo}`).classList.replace('green-text', 'red-text');
+                    $(`#baja_${data.codigo}`).attr('disabled', true);
+                    $(`#edit_${data.codigo}`).attr('disabled', true);
+                })
+                .fail(function() {
+                    var toastHTML = '<span>Error al dar de Baja Usuario</span><button class="btn-flat toast-action"><i class="fa-solid fa-xmark"></i></button>';
+                    M.toast({html: toastHTML});
+                });
+            }
+
+        //});
+
+         $(document).ready(function() {
+            var myTable = $('#myTable').DataTable({
+                language: { url: '/lib/es-ES.json' }
+            })
+        });
+    </script>
+}

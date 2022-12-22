@@ -31,10 +31,10 @@
                 @Html.DisplayNameFor(model => model.TiempoEnfermedad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tratamiento)
+                @Html.DisplayNameFor(model => model.CodCitaNavigation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FarscodresNavigation)
+                @Html.DisplayNameFor(model => model.CodtratamientoNavigation)
             </th>
             <th></th>
         </tr>
@@ -61,15 +61,15 @@
                 @Html.DisplayFor(modelItem => item.TiempoEnfermedad)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Tratamiento)
+                @Html.DisplayFor(modelItem => item.CodCitaNavigation.Codigo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FarscodresNavigation.Codigo)
+                @Html.DisplayFor(modelItem => item.CodtratamientoNavigation.Codigo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Parscodres">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Parscodres">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Parscodres">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
             </td>
         </tr>
 }

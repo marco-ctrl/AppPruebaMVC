@@ -1,10 +1,8 @@
 ﻿using AppPruebaMVC.Data.Context;
 using AppPruebaMVC.Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace AppPruebaMVC.Controllers

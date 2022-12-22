@@ -9,7 +9,7 @@ namespace AppPruebaMVC.Data.Models
     {
         public RecetaMedica()
         {
-            Tratamientos = new HashSet<Tratamiento>();
+            Resultados = new HashSet<Resultado>();
         }
 
         public int Cantidad { get; set; }
@@ -19,6 +19,6 @@ namespace AppPruebaMVC.Data.Models
         public int Codigo { get; set; }
 
         public virtual Medicamento CodMedicamentoNavigation { get; set; }
-        public virtual ICollection<Tratamiento> Tratamientos { get; set; }
+        public virtual ICollection<Resultado> Resultados { get; set; }
     }
 }

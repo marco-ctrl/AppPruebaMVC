@@ -1,10 +1,9 @@
 ﻿using AppPruebaMVC.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using System.Diagnostics;
-
+using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -24,7 +23,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         [HttpGet]
-        public JsonResult BusquedaPersona( string busqueda )
+        public JsonResult BusquedaPersona(string busqueda)
         {
             List<BusquedaPersona> busquedaPersonaList = new List<BusquedaPersona>();
             using (var conn = new SqlConnection(cadenaSQL))

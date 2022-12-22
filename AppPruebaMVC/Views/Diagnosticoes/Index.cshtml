@@ -1,27 +1,27 @@
 ﻿@model IEnumerable<AppPruebaMVC.Data.Models.Diagnostico>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Diagnostico";
 }
+<link rel="stylesheet" href="~/css/materialTable.css" asp-append-version="true" />
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<div class="container">
+    <p>
+    <a asp-action="Create" class="btn-floating btn-large waves-effect waves-light blue tooltipped" data-position="bottom" data-tooltip="Agregar Medicamento"><i class="fa-solid fa-plus fa-3x"></i></a>
 </p>
-<table class="table">
+<table class="responsive-table striped" id="myTable">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TipoDiagnostico)
+                Tipo Diagnostico
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodEnfermedadNavigation)
+                Enfermedad
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CodResultadoNavigation)
+                Resultado
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -34,14 +34,28 @@
                 @Html.DisplayFor(modelItem => item.CodEnfermedadNavigation.Codigo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CodResultadoNavigation.Parscodres)
+                @Html.DisplayFor(modelItem => item.CodResultadoNavigation.Codigo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+                <a id="edit_@item.Codigo" asp-action="Edit" asp-route-id="@item.Codigo" class="btn grey tooltipped" data-position="bottom" data-tooltip="Editar Medicamento"><i class="fa-solid fa-pen-to-square"></i></a>
+                    
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+</div>
+
+@section Scripts{
+    <script>
+            
+        //});
+
+         $(document).ready(function() {
+            var myTable = $('#myTable').DataTable({
+                language: { url: '/lib/es-ES.json' }
+            })
+        });
+    </script>
+}

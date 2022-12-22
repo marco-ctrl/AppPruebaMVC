@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
+﻿using AppPruebaMVC.Data.Context;
 using AppPruebaMVC.Data.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,11 +17,11 @@ namespace AppPruebaMVC.Controllers
         // GET: Medicamentoes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Medicamentos.ToListAsync());
+            return View(await _context.Medicamentos.ToListAsync());
         }
 
         // GET: Medicamentoes/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Medicamentos == null)
             {
@@ -58,6 +53,9 @@ namespace AppPruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                medicamento.NombreMedicamento = medicamento.NombreMedicamento.ToUpper();
+                medicamento.Descripcion = medicamento.Descripcion.ToUpper();
+                medicamento.Estado = true;
                 _context.Add(medicamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +64,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Medicamentoes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Medicamentos == null)
             {
@@ -97,6 +95,10 @@ namespace AppPruebaMVC.Controllers
             {
                 try
                 {
+                    medicamento.NombreMedicamento = medicamento.NombreMedicamento.ToUpper();
+                    medicamento.Descripcion = medicamento.Descripcion.ToUpper();
+                    medicamento.Estado = true;
+
                     _context.Update(medicamento);
                     await _context.SaveChangesAsync();
                 }
@@ -116,46 +118,53 @@ namespace AppPruebaMVC.Controllers
             return View(medicamento);
         }
 
-        // GET: Medicamentoes/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        // GET: Medicamentoes/Baja/5
+        public async Task<IActionResult> Baja(int? id)
         {
             if (id == null || _context.Medicamentos == null)
             {
                 return NotFound();
             }
 
-            var medicamento = await _context.Medicamentos
-                .FirstOrDefaultAsync(m => m.Codigo == id);
+            var medicamento = await _context.Medicamentos.FindAsync(id);
             if (medicamento == null)
             {
                 return NotFound();
             }
-
-            return View(medicamento);
+            return PartialView("Baja", medicamento);
         }
 
         // POST: Medicamentoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost, ActionName("DarBaja")]
+        public async Task<IActionResult> Baja(int id, [Bind("NombreMedicamento,Codigo,Descripcion,Estado")] Medicamento medicamento)
         {
-            if (_context.Medicamentos == null)
+
+            if (ModelState.IsValid)
             {
-                return Problem("Entity set 'consultoriobdContext.Medicamentos'  is null.");
+                try
+                {
+                    _context.Update(medicamento);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MedicamentoExists(medicamento.Codigo))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                //return RedirectToAction(nameof(Index));
             }
-            var medicamento = await _context.Medicamentos.FindAsync(id);
-            if (medicamento != null)
-            {
-                _context.Medicamentos.Remove(medicamento);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(medicamento);
         }
 
-        private bool MedicamentoExists(int id)
+        private bool MedicamentoExists(int? id)
         {
-          return _context.Medicamentos.Any(e => e.Codigo == id);
+            return _context.Medicamentos.Any(e => e.Codigo == id);
         }
     }
 }

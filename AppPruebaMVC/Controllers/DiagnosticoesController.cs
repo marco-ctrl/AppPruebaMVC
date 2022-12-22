@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -27,7 +23,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Diagnosticoes/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Diagnosticos == null)
             {
@@ -73,7 +69,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Diagnosticoes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Diagnosticos == null)
             {
@@ -128,7 +124,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: Diagnosticoes/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Diagnosticos == null)
             {
@@ -150,7 +146,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Diagnosticoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.Diagnosticos == null)
             {
@@ -161,14 +157,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Diagnosticos.Remove(diagnostico);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DiagnosticoExists(int id)
+        private bool DiagnosticoExists(int? id)
         {
-          return _context.Diagnosticos.Any(e => e.Codigo == id);
+            return _context.Diagnosticos.Any(e => e.Codigo == id);
         }
     }
 }

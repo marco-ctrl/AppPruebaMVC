@@ -8,12 +8,24 @@
     <title>Consultorio Medico Visacho</title>
     <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"/>
+    <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
+    
+
      <link rel="stylesheet" href="~/AppPruebaMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="blue"> </nav>
+        <nav class="blue">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo white-text">@ViewData["Title"]</a>
+                @*<ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="sass.html">Sass</a></li>
+                    <li><a href="badges.html">Components</a></li>
+                    <li><a href="collapsible.html">JavaScript</a></li>
+                </ul>*@
+            </div>
+        </nav>
 
   <ul id="slide-out" class="sidenav sidenav-fixed">
     <li><div class="user-view">
@@ -30,6 +42,7 @@
     <li><a asp-area="" asp-controller="Pacientes" asp-action="Index"><i class="fa-solid fa-user-injured fa-2x"></i>Paciente</a></li>
     <li><a asp-area="" asp-controller="Doctors" asp-action="Index"><i class="fa-solid fa-user-doctor fa-2x"></i>Doctor</a></li>
     <li><a asp-area="" asp-controller="Enfermeras" asp-action="Index"><i class="fa-solid fa-user-nurse fa-2x"></i>Enfermera</a></li>
+    <li><a asp-area="" asp-controller="Admicions" asp-action="Index"><i class="fa-solid fa-prescription-bottle-medical fa-2x"></i>Admicion</a></li>
     <li><a asp-area="" asp-controller="CitaMedicas" asp-action="Index"><i class="fa-solid fa-notes-medical fa-2x"></i>Cita Medica</a></li>
     <li><a asp-area="" asp-controller="Diagnosticoes" asp-action="Index"><i class="fa-solid fa-comment-medical fa-2x"></i>Diagnostico</a></li>
     <li><a asp-area="" asp-controller="Enfermedads" asp-action="Index"><i class="fa-solid fa-disease fa-2x"></i>Enfermedades</a></li>
@@ -56,12 +69,26 @@
         </div>
     </footer>-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="~/lib/materialize/js/materialize.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
-       $(document).ready(function(){
-     M.AutoInit();
-  });
+        function ValidarEscrituraFecha() {
+            if (event.keyCode == 9) {
+        // Código para la tecla TAB
+        //console.log("Oprimiste la tecla TAB");
+
+            } else {
+                return false;
+            }
+        }
+        
+        $(document).ready(function(){
+            M.AutoInit();
+            
+        
+        });
     </script>
     <script>
         $(document).ready(function(){
@@ -76,7 +103,9 @@
                 },
                 autoClose: true
             });
+             
         });
+       
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

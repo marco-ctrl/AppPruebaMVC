@@ -1,36 +1,34 @@
 ﻿@model AppPruebaMVC.Data.Models.Enfermedad
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Enfermedad";
 }
 
-<h1>Edit</h1>
-
-<h4>Enfermedad</h4>
+<div class="container">
+    <h4>Editar</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col l8">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
+            <div asp-validation-summary="ModelOnly" class="red-text"></div>
             <input type="hidden" asp-for="Codigo" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="input-field">
+                <label asp-for="Nombre" ></label>
+                <input asp-for="Nombre" class="validate" />
+                <span asp-validation-for="Nombre" class="red-text"></span>
             </div>
+            <div class="input-field">
+                <label asp-for="Descripcion" ></label>
+                <input asp-for="Descripcion" class="validate" />
+                <span asp-validation-for="Descripcion" class="red-text"></span>
+            </div>
+            <div class="right-align col l12">
+                <button type="submit" class="btn blue"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                <a asp-action="Index" class="btn red"><i class="fa-solid fa-ban"></i> Cancelar</a>
+            </div>
+            
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

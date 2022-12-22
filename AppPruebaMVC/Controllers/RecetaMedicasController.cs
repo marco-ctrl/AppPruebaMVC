@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -27,7 +23,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: RecetaMedicas/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.RecetaMedicas == null)
             {
@@ -70,7 +66,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: RecetaMedicas/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.RecetaMedicas == null)
             {
@@ -123,7 +119,7 @@ namespace AppPruebaMVC.Controllers
         }
 
         // GET: RecetaMedicas/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.RecetaMedicas == null)
             {
@@ -144,7 +140,7 @@ namespace AppPruebaMVC.Controllers
         // POST: RecetaMedicas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.RecetaMedicas == null)
             {
@@ -155,14 +151,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.RecetaMedicas.Remove(recetaMedica);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RecetaMedicaExists(int id)
+        private bool RecetaMedicaExists(int? id)
         {
-          return _context.RecetaMedicas.Any(e => e.Codigo == id);
+            return _context.RecetaMedicas.Any(e => e.Codigo == id);
         }
     }
 }

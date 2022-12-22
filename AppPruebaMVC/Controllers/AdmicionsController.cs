@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AppPruebaMVC.Data.Context;
+using AppPruebaMVC.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AppPruebaMVC.Data.Context;
-using AppPruebaMVC.Data.Models;
 
 namespace AppPruebaMVC.Controllers
 {
@@ -22,12 +18,13 @@ namespace AppPruebaMVC.Controllers
         // GET: Admicions
         public async Task<IActionResult> Index()
         {
-            var consultoriobdContext = _context.Admicions.Include(a => a.CodEnfermeraNavigation).Include(a => a.CodPacienteNavigation);
+            var consultoriobdContext = _context.Admicions.Include(a => a.CodEnfermeraNavigation).Include(a => a.CodCitaNavigation);
+
             return View(await consultoriobdContext.ToListAsync());
         }
 
         // GET: Admicions/Details/5
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Admicions == null)
             {
@@ -35,8 +32,8 @@ namespace AppPruebaMVC.Controllers
             }
 
             var admicion = await _context.Admicions
-                .Include(a => a.CodEnfermeraNavigation)
-                .Include(a => a.CodPacienteNavigation)
+                .Include(a => a.CodEnfermeraNavigation.CodigoNavigation)
+                .Include(a => a.CodCitaNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (admicion == null)
             {
@@ -50,7 +47,7 @@ namespace AppPruebaMVC.Controllers
         public IActionResult Create()
         {
             ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo");
-            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo");
+            //ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo");
             return View();
         }
 
@@ -68,12 +65,12 @@ namespace AppPruebaMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo", admicion.CodEnfermera);
-            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", admicion.CodPaciente);
+            //ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", admicion.CodPaciente);
             return View(admicion);
         }
 
         // GET: Admicions/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Admicions == null)
             {
@@ -86,7 +83,7 @@ namespace AppPruebaMVC.Controllers
                 return NotFound();
             }
             ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo", admicion.CodEnfermera);
-            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", admicion.CodPaciente);
+            //ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", admicion.CodPaciente);
             return View(admicion);
         }
 
@@ -123,12 +120,12 @@ namespace AppPruebaMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CodEnfermera"] = new SelectList(_context.Enfermeras, "Codigo", "Codigo", admicion.CodEnfermera);
-            ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", admicion.CodPaciente);
+            //ViewData["CodPaciente"] = new SelectList(_context.Pacientes, "Codigo", "Codigo", admicion.CodPaciente);
             return View(admicion);
         }
 
         // GET: Admicions/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Admicions == null)
             {
@@ -137,7 +134,7 @@ namespace AppPruebaMVC.Controllers
 
             var admicion = await _context.Admicions
                 .Include(a => a.CodEnfermeraNavigation)
-                .Include(a => a.CodPacienteNavigation)
+                .Include(a => a.CodCitaNavigation)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
             if (admicion == null)
             {
@@ -150,7 +147,7 @@ namespace AppPruebaMVC.Controllers
         // POST: Admicions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (_context.Admicions == null)
             {
@@ -161,14 +158,14 @@ namespace AppPruebaMVC.Controllers
             {
                 _context.Admicions.Remove(admicion);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdmicionExists(int id)
+        private bool AdmicionExists(int? id)
         {
-          return _context.Admicions.Any(e => e.Codigo == id);
+            return _context.Admicions.Any(e => e.Codigo == id);
         }
     }
 }
